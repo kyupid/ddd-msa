@@ -1,6 +1,8 @@
 package com.kyupid.kshop.product.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
@@ -10,10 +12,12 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
     @Id
     @GeneratedValue
+    @Column(name = "product_id")
     private Long id;
 
     @Column(unique = true)
@@ -23,9 +27,6 @@ public class Product {
 
     @ColumnDefault("0")
     private Integer quantityLeft;
-
-    protected Product() {
-    }
 
     public Product(String name) {
         this.name = name;
