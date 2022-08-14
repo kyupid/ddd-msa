@@ -27,4 +27,7 @@ public class Order {
 
     @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
+
+    @Embedded
+    private Orderer orderer;
 }
