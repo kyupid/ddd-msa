@@ -2,6 +2,7 @@ package com.kyupid.kshop.product.application;
 
 import com.kyupid.kshop.product.domain.Product;
 import com.kyupid.kshop.product.domain.ProductRepository;
+import com.kyupid.kshop.product.exception.DuplicatedNameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,10 @@ public class ProductService {
 
     @Transactional
     public Product createProduct(Product savingProduct) {
+        boolean hasSameName = productRepository.existsByName(savingProduct.getName());
+        if (hasSameName) {
+            throw new DuplicatedNameException();
+        }
         return productRepository.save(savingProduct);
     }
 

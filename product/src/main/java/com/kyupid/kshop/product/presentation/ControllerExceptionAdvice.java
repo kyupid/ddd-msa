@@ -1,5 +1,6 @@
 package com.kyupid.kshop.product.presentation;
 
+import com.kyupid.kshop.product.exception.DuplicatedNameException;
 import com.kyupid.kshop.product.presentation.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,11 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(NoSuchElementException.class)
     public ExceptionResponse handleProductNotFound() {
         return new ExceptionResponse("Product Not Found");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicatedNameException.class)
+    public ExceptionResponse handleDuplicatedName() {
+        return new ExceptionResponse("Duplicated Name");
     }
 }

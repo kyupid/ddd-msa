@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * JpaRepository의 구현체는 IoC컨테이너가 주입해주므로 infra에 아무것도 없는 상황
  */
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    boolean existsByName(String name);
 }
