@@ -15,7 +15,10 @@ public class ProductRequestData {
     @NotNull
     private Integer price;
 
+    @NotNull
+    private Integer quantity;
+
     public Product toEntity() {
-        return new Product(name, price);
+        return new Product(name, price, quantity);
     }
 }

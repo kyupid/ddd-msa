@@ -27,9 +27,10 @@ public class Product {
         this.name = name;
     }
 
-    public Product(String name, Integer price) {
+    public Product(String name, Integer price, Integer quantityLeft) {
         this.name = name;
         this.price = price;
+        this.quantityLeft = quantityLeft;
     }
 
     public void changeAllInfo(Product changingProduct) {
