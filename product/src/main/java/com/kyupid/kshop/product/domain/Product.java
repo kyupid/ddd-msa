@@ -18,6 +18,8 @@ public class Product {
 
     private Integer price;
 
+    private Integer quantityLeft;
+
     protected Product() {
     }
 
