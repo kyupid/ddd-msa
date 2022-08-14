@@ -30,4 +30,7 @@ public class Order {
 
     @Embedded
     private Orderer orderer;
+
+    @Embedded
+    private DeliveryInfo deliveryInfo;
 }
