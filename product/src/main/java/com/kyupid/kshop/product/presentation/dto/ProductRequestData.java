@@ -1,6 +1,6 @@
-package com.kyupid.kshop.product.api.dto;
+package com.kyupid.kshop.product.presentation.dto;
 
-import com.kyupid.kshop.product.entity.Product;
+import com.kyupid.kshop.product.domain.Product;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;

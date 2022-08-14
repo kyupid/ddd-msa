@@ -1,7 +1,7 @@
-package com.kyupid.kshop.product.service;
+package com.kyupid.kshop.product.application;
 
-import com.kyupid.kshop.product.entity.Product;
-import com.kyupid.kshop.product.repository.ProductRepository;
+import com.kyupid.kshop.product.domain.Product;
+import com.kyupid.kshop.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.kyupid.kshop.product.entity;
+package com.kyupid.kshop.product.domain;
 
 import lombok.Getter;
 

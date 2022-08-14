@@ -1,6 +1,6 @@
-package com.kyupid.kshop.product.api;
+package com.kyupid.kshop.product.presentation;
 
-import com.kyupid.kshop.product.api.dto.ExceptionResponse;
+import com.kyupid.kshop.product.presentation.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,9 +1,9 @@
-package com.kyupid.kshop.product.api;
+package com.kyupid.kshop.product.presentation;
 
-import com.kyupid.kshop.product.api.dto.ProductRequestData;
-import com.kyupid.kshop.product.api.dto.ProductResponseData;
-import com.kyupid.kshop.product.entity.Product;
-import com.kyupid.kshop.product.service.ProductService;
+import com.kyupid.kshop.product.application.ProductService;
+import com.kyupid.kshop.product.domain.Product;
+import com.kyupid.kshop.product.presentation.dto.ProductRequestData;
+import com.kyupid.kshop.product.presentation.dto.ProductResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;

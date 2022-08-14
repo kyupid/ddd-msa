@@ -1,4 +1,4 @@
-package com.kyupid.kshop.product.api.dto;
+package com.kyupid.kshop.product.presentation.dto;
 
 import lombok.Getter;
 

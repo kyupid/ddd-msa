@@ -1,7 +1,7 @@
 package com.kyupid.kshop.product;
 
-import com.kyw.kywshop.domain.entity.Product;
-import com.kyw.kywshop.service.ProductService;
+import com.kyupid.kshop.product.application.ProductService;
+import com.kyupid.kshop.product.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
