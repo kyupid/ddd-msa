@@ -1,4 +1,4 @@
-package com.kyupid.kshop.member;
+package com.kyupid.kshop.order.auth;
 
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,13 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 @Component
-public class JwtKey implements SecretKey {
+public class JwtKey {
     private final String secretString;
 
     public JwtKey(@Value("${jwt.secret}") String secretString){
         this.secretString = secretString;
     }
-    @Override
+
     public Key keyEncrypted() {
         return Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }

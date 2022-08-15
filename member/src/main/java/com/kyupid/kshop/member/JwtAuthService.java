@@ -20,7 +20,7 @@ public class JwtAuthService {
 //        Member member = memberRepository.findById(requestData.getEmail())
 //                .orElseThrow(() -> new RuntimeException("no id"));
 
-        // 아래 helloMember 로 로그인되었다고 가정
+        // 아래 helloMember 로 로그인 시도한다고 가정
         Member helloMember = new Member("hello@world.com", "1234");
 
         boolean hasSamePassword = helloMember.hasSamePassword(requestData.getPassword());
@@ -33,6 +33,4 @@ public class JwtAuthService {
 
         return new LoginResponseData(jwt);
     }
-
-
 }
