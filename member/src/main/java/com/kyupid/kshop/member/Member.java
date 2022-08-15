@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -12,6 +11,8 @@ import javax.persistence.Id;
 public class Member {
 
     @Id
+    private Long memberId;
+
     private String email;
 
     private String password;
@@ -19,7 +20,8 @@ public class Member {
     protected Member() {
     }
 
-    public Member(String email, String password) {
+    public Member(Long memberId, String email, String password) {
+        this.memberId = memberId;
         this.email = email;
         this.password = password;
     }

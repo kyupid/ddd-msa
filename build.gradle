@@ -49,8 +49,8 @@ subprojects {
     }
 }
 
-project(':order') {
-    dependencies {
-        implementation project(':product')
-    }
-}
+//project(':order') {
+//    dependencies {
+//        implementation project(':product')
+//    }
+//}

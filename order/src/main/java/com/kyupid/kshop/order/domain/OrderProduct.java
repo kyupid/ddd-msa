@@ -1,7 +1,6 @@
 package com.kyupid.kshop.order.domain;
 
 
-import com.kyupid.kshop.product.domain.Product;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +17,7 @@ public class OrderProduct {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Long memberId;
 
     private Integer orderPrice;
 

@@ -29,5 +29,5 @@ springdoc:
     path: /doc/swagger
     operations-sorter: method
 
-key:
+jwt:
   secret: HELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLD

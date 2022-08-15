@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class JwtAuth {
     private final JwtKey key;
 
-    public String encode(String id) {
+    public String encode(Long id) {
         return Jwts.builder()
                 .signWith(key.keyEncrypted())
                 .claim("memberId", id)

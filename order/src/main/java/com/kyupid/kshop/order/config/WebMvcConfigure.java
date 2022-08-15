@@ -1,0 +1,23 @@
+package com.kyupid.kshop.order.config;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+@RequiredArgsConstructor
+@Slf4j
+public class WebMvcConfigure implements WebMvcConfigurer {
+
+    private final AuthenticationInterceptor authenticationInterceptor;
+
+    public void addInterceptors(InterceptorRegistry registry) {
+        log.info(">>> 인터셉터 등록");
+        InterceptorRegistration interceptorRegistration = registry.addInterceptor(authenticationInterceptor);
+        interceptorRegistration.addPathPatterns("/api/**");
+        interceptorRegistration.excludePathPatterns("/api/error");
+    }
+}

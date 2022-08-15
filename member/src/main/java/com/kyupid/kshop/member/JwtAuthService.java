@@ -21,7 +21,7 @@ public class JwtAuthService {
 //                .orElseThrow(() -> new RuntimeException("no id"));
 
         // 아래 helloMember 로 로그인 시도한다고 가정
-        Member helloMember = new Member("hello@world.com", "1234");
+        Member helloMember = new Member(1L, "hello@world.com", "1234");
 
         boolean hasSamePassword = helloMember.hasSamePassword(requestData.getPassword());
 
@@ -29,7 +29,7 @@ public class JwtAuthService {
             throw new RuntimeException("wrong password");
         }
 
-        String jwt = jwtAuth.encode(helloMember.getEmail());
+        String jwt = jwtAuth.encode(helloMember.getMemberId());
 
         return new LoginResponseData(jwt);
     }

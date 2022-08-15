@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,19 +19,27 @@ public class Order {
     @Id
     @GeneratedValue
     @Column(name = "order_id")
-    private Long id;
+    private Long orderId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProductList = new ArrayList<>();
 
-    private LocalDateTime orderDate;
-
     @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @Embedded
-    private Orderer orderer;
+    private Long ordererMemberId;
 
     @Embedded
     private DeliveryInfo deliveryInfo;
+
+    private LocalDateTime orderDate;
+
+    @Builder
+    public Order(List<OrderProduct> orderProductList, OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo, LocalDateTime orderDate) {
+        this.orderProductList = orderProductList;
+        this.orderStatus = orderStatus;
+        this.ordererMemberId = ordererMemberId;
+        this.deliveryInfo = deliveryInfo;
+        this.orderDate = orderDate;
+    }
 }
