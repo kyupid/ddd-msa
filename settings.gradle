@@ -1,4 +1,5 @@
 rootProject.name = 'kshop'
 include 'product'
 include 'order'
+include 'member'
 
