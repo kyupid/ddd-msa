@@ -25,7 +25,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws IOException, ServletException {
         log.info(">>> interceptor.preHandle 호출");
-        String jwt = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String jwt = request.getHeader("security");
 
         if (jwt == null) {
             log.warn(">>> JWT is NULL");

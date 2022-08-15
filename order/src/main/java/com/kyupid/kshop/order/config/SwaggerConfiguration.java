@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
             Parameter header = new Parameter()
                     .in(ParameterIn.HEADER.toString())
                     .schema(new StringSchema())
-                    .name(HttpHeaders.AUTHORIZATION)
+                    .name("security")
                     .required(true);
 
             operation.addParametersItem(header);
