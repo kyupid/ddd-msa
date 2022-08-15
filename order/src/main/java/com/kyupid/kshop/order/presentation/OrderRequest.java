@@ -1,5 +1,6 @@
 package com.kyupid.kshop.order.presentation;
 
+import com.kyupid.kshop.order.application.OrderProductRequest;
 import com.kyupid.kshop.order.domain.DeliveryInfo;
 import com.kyupid.kshop.order.domain.Order;
 import com.kyupid.kshop.order.domain.OrderProduct;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter
 public class OrderRequest {
-    private List<OrderProduct> orderProductList;
+    private List<OrderProductRequest> orderProductList;
     private Long ordererId;
     private DeliveryInfo deliveryInfo;
 
@@ -21,7 +22,7 @@ public class OrderRequest {
 
     public Order toEntity() {
         return Order.builder()
-                .orderProductList(orderProductList)
+//                .orderProductList(orderProductList)
                 .ordererMemberId(ordererId)
                 .orderStatus(OrderStatus.PAYMENT_WAITING)
                 .deliveryInfo(deliveryInfo)

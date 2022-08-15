@@ -1,11 +1,8 @@
 package com.kyupid.kshop.order.config;
 
 import com.kyupid.kshop.order.auth.JwtAuth;
-import com.kyupid.kshop.order.presentation.exception.NoTokenException;
-import com.sun.corba.se.impl.logging.InterceptorsSystemException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -45,7 +42,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     }
 
     private boolean validateToken(String jwt) {
-        log.info("만료되지 않음, 위조되지 않음");
+        log.info(">>> JWT 만료되지 않음, 위조되지 않음");
         return true;
     }
 }

@@ -17,9 +17,20 @@ public class OrderProduct {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private Long memberId;
+    private Long productId;
 
     private Integer orderPrice;
 
     private Integer orderQuantity;
+
+    public OrderProduct(Order order, Long productId, Integer orderPrice, Integer orderQuantity) {
+        this.order = order;
+        this.productId = productId;
+        this.orderPrice = orderPrice;
+        this.orderQuantity = orderQuantity;
+    }
+
+    public Integer calculatePrice(Integer pricePerProduct) {
+        return orderQuantity * pricePerProduct;
+    }
 }

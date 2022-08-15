@@ -34,7 +34,6 @@ public class OrderController {
     @PostMapping
     public OrderResponse orderProduct(@RequestBody OrderRequest orderRequest) {
         orderRequest.setOrdererId(TEMP_MEMBER_ID);
-
         Order order = placeOrderService.placeOrder(orderRequest);
         return OrderResponse.from(order);
     }
