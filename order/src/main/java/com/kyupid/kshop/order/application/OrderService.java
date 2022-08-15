@@ -28,15 +28,12 @@ public class OrderService {
                 .orElseThrow(() -> new NoSuchElementException(orderId.toString()));
     }
 
-    public Order placeOrder(OrderRequest orderRequest) {
-        Order order = orderRequest.toEntity();
-        orderRepository.save(order);
+
+
+    public Order changeOrder(OrderRequest orderRequest, Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
         return order;
     }
 
-    public Order changeOrder(OrderRequest orderRequest) {
-        Order order = orderRequest.toEntity();
-        orderRepository.save(order);
-        return order;
-    }
+
 }
