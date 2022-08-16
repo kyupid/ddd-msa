@@ -20,7 +20,8 @@ public class ProductRepositoryImpl implements ProductRepository {
      */
     @Override
     public OrderProductResponse getProductPrice(List<OrderProductRequest> request) {
-        JSONObject process = RestClient.process(request, REQUEST_URL);
+        String URI = "/api/products/price";
+        JSONObject process = RestClient.process(request, REQUEST_URL + URI);
         return (OrderProductResponse) process.get("data");
     }
 

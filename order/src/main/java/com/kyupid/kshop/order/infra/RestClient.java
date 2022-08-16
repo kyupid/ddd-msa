@@ -25,6 +25,7 @@ public class RestClient {
 
         ResponseEntity<String> response = restTemplate.exchange(requestUrl, HttpMethod.POST, entity, String.class);
 
+        System.out.println(response);
         return new JSONObject(response.getBody());
     }
 }
