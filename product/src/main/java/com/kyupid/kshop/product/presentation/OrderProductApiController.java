@@ -1,6 +1,7 @@
 package com.kyupid.kshop.product.presentation;
 
 import com.kyupid.kshop.product.application.GetProductPriceService;
+import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
 import com.kyupid.kshop.product.presentation.dto.OrderProductRequest;
 import com.kyupid.kshop.product.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.product.presentation.dto.OrderProductWithPrice;
@@ -20,8 +21,7 @@ public class OrderProductApiController {
     private final GetProductPriceService getProductPriceService;
 
     @PostMapping("/price")
-    public OrderProductResponse getProductPrice(@RequestBody List<OrderProductRequest> request) {
-        List<OrderProductWithPrice> price = getProductPriceService.getPrice(request);
-        return new OrderProductResponse(price);
+    public OrderProductInternalReqRes getProductPrice(@RequestBody OrderProductInternalReqRes request) {
+        return getProductPriceService.getPrice(request);
     }
 }

@@ -1,11 +1,9 @@
-package com.kyupid.kshop.order.infra;
+package com.kyupid.kshop.order.application;
 
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
-@ToString
-public class OrderProductWithPrice {
+public class OrderProductDto {
     private Long productId;
     private Integer quantity;
     private Integer pricePerProduct;

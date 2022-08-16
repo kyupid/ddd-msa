@@ -1,9 +1,8 @@
 package com.kyupid.kshop.order.presentation;
 
-import com.kyupid.kshop.order.application.OrderProductRequest;
+import com.kyupid.kshop.order.application.OrderProductDto;
 import com.kyupid.kshop.order.domain.DeliveryInfo;
 import com.kyupid.kshop.order.domain.Order;
-import com.kyupid.kshop.order.domain.OrderProduct;
 import com.kyupid.kshop.order.domain.OrderStatus;
 import lombok.Getter;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Getter
 public class OrderRequest {
-    private List<OrderProductRequest> orderProductList;
+    private List<OrderProductDto> orderProductList;
     private Long ordererId;
     private DeliveryInfo deliveryInfo;
 

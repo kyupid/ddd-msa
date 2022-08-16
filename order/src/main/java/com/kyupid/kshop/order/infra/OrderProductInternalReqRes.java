@@ -1,16 +1,15 @@
 package com.kyupid.kshop.order.infra;
 
+import com.kyupid.kshop.order.application.OrderProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class OrderProductResponse {
-    private List<OrderProductWithPrice> list;
+public class OrderProductInternalReqRes {
+    private List<OrderProductDto> orderProductDtoList;
 }

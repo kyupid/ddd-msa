@@ -1,10 +1,7 @@
 package com.kyupid.kshop.order.domain;
 
-import com.kyupid.kshop.order.application.OrderProductRequest;
-import com.kyupid.kshop.order.infra.OrderProductResponse;
-
-import java.util.List;
+import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
 
 public interface ProductRepository {
-    OrderProductResponse getProductPrice(List<OrderProductRequest> request);
+    OrderProductInternalReqRes getProductPrice(OrderProductInternalReqRes request);
 }

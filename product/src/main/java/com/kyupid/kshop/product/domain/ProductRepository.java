@@ -1,7 +1,13 @@
 package com.kyupid.kshop.product.domain;
 
 import com.kyupid.kshop.product.domain.Product;
+import com.kyupid.kshop.product.presentation.dto.OrderProductDto;
+import com.kyupid.kshop.product.presentation.dto.OrderProductWithPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 /**
  * DB, 메시징시스템, 외부시스템과의 연동 등의 실제 구현은 infastructure (이하 infra)에서 수행
@@ -11,5 +17,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByName(String name);
 
-    Integer findPriceByIdAndQuantityLeftGreaterThan(Long productId, Integer quantity);
+    @Query("select new com.kyupid.kshop.product.presentation.dto.OrderProductDto(p.id, p.price)" +
+            "from Product p where p.id = :productId and p.quantityLeft >= :quantity")
+    Optional<OrderProductDto> findOrderProductWithPrice(@Param("productId") Long productId,
+                                                        @Param("quantity") Integer quantity);
 }
