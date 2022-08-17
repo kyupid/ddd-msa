@@ -1,10 +1,8 @@
 package com.kyupid.kshop.product.application;
 
-import com.kyupid.kshop.product.domain.ProductRepository;
+import com.kyupid.kshop.product.infra.ProductRepository;
 import com.kyupid.kshop.product.presentation.dto.OrderProductDto;
 import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
-import com.kyupid.kshop.product.presentation.dto.OrderProductRequest;
-import com.kyupid.kshop.product.presentation.dto.OrderProductWithPrice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

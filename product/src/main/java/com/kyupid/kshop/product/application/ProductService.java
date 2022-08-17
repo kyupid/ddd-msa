@@ -1,7 +1,7 @@
 package com.kyupid.kshop.product.application;
 
 import com.kyupid.kshop.product.domain.Product;
-import com.kyupid.kshop.product.domain.ProductRepository;
+import com.kyupid.kshop.product.infra.ProductRepository;
 import com.kyupid.kshop.product.exception.DuplicatedNameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,8 +1,7 @@
-package com.kyupid.kshop.product.domain;
+package com.kyupid.kshop.product.infra;
 
 import com.kyupid.kshop.product.domain.Product;
 import com.kyupid.kshop.product.presentation.dto.OrderProductDto;
-import com.kyupid.kshop.product.presentation.dto.OrderProductWithPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
