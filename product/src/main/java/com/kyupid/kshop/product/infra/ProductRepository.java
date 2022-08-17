@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByName(String name);
 
     @Query("select new com.kyupid.kshop.product.presentation.dto.OrderProductDto(p.id, p.price)" +
-            "from Product p where p.id = :productId and p.quantityLeft >= :quantity")
+            "from Product p where p.id = :productId and p.stock >= :quantity")
     Optional<OrderProductDto> findOrderProductWithPrice(@Param("productId") Long productId,
                                                         @Param("quantity") Integer quantity);
 }

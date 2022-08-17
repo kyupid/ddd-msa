@@ -26,16 +26,16 @@ public class Product {
     private Integer price;
 
     @ColumnDefault("0")
-    private Integer quantityLeft;
+    private Integer stock;
 
     public Product(String name) {
         this.name = name;
     }
 
-    public Product(String name, Integer price, Integer quantityLeft) {
+    public Product(String name, Integer price, Integer stock) {
         this.name = name;
         this.price = price;
-        this.quantityLeft = quantityLeft;
+        this.stock = stock;
     }
 
     public void changeAllInfo(Product changingProduct) {

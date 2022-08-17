@@ -9,14 +9,14 @@ public class ProductResponseData {
     private Long productId;
     private String name;
     private Integer price;
-    private Integer quantityLeft;
+    private Integer stock;
 
     @Builder
-    public ProductResponseData(Long productId, String name, Integer price, Integer quantityLeft) {
+    public ProductResponseData(Long productId, String name, Integer price, Integer stock) {
         this.productId = productId;
         this.name = name;
         this.price = price;
-        this.quantityLeft = quantityLeft;
+        this.stock = stock;
     }
 
     public static ProductResponseData from(Product p) {
@@ -24,7 +24,7 @@ public class ProductResponseData {
                 .productId(p.getId())
                 .name(p.getName())
                 .price(p.getPrice())
-                .quantityLeft(p.getQuantityLeft())
+                .stock(p.getStock())
                 .build();
     }
 }
