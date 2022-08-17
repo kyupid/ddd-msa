@@ -1,6 +1,6 @@
 package com.kyupid.kshop.order.presentation;
 
-import com.kyupid.kshop.order.application.OrderProductDto;
+import com.kyupid.kshop.order.infra.OrderProductDto;
 import com.kyupid.kshop.order.domain.DeliveryInfo;
 import com.kyupid.kshop.order.domain.Order;
 import com.kyupid.kshop.order.domain.OrderStatus;

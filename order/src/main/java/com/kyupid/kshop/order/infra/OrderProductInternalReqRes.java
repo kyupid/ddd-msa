@@ -1,6 +1,5 @@
 package com.kyupid.kshop.order.infra;
 
-import com.kyupid.kshop.order.application.OrderProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

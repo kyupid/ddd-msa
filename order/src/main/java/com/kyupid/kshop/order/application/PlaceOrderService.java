@@ -4,7 +4,6 @@ import com.kyupid.kshop.order.domain.Order;
 import com.kyupid.kshop.order.domain.OrderRepository;
 import com.kyupid.kshop.order.domain.ProductRepository;
 import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
-import com.kyupid.kshop.order.infra.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

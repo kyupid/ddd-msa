@@ -1,4 +1,4 @@
-package com.kyupid.kshop.order.application;
+package com.kyupid.kshop.order.infra;
 
 import lombok.Getter;
 
