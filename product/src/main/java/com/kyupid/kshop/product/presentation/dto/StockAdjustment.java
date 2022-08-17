@@ -5,15 +5,16 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class OrderProductDto {
+public class StockAdjustment {
     private Long productId;
     private Integer quantity;
+    private AdjustmentType adjustmentType;
     private Integer pricePerProduct;
 
-    public OrderProductDto() {
+    public StockAdjustment() {
     }
 
-    public OrderProductDto(Long productId, Integer pricePerProduct) {
+    public StockAdjustment(Long productId, Integer pricePerProduct) {
         this.productId = productId;
         this.pricePerProduct = pricePerProduct;
     }

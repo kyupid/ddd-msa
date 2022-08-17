@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderProductInternalReqRes {
-    private List<OrderProductDto> orderProductDtoList;
+    private List<StockAdjustment> stockAdjustmentList;
 }
