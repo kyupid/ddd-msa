@@ -12,6 +12,5 @@ import lombok.extern.slf4j.Slf4j;
 public class StockAdjustment {
     private Long productId;
     private Integer quantity;
-    private AdjustmentType adjustmentType;
     private Integer pricePerProduct;
 }

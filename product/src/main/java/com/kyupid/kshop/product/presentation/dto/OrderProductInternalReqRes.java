@@ -7,8 +7,13 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderProductInternalReqRes {
     private List<StockAdjustment> stockAdjustmentList;
+    private List<Long> orderIdList;
+
+    public OrderProductInternalReqRes(List<StockAdjustment> stockAdjustmentList, List<Long> orderIdList) {
+        this.stockAdjustmentList = stockAdjustmentList;
+        this.orderIdList = orderIdList;
+    }
 }

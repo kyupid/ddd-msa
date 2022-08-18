@@ -5,6 +5,7 @@ import com.kyupid.kshop.product.domain.ReservedStock;
 import com.kyupid.kshop.product.domain.Status;
 import com.kyupid.kshop.product.infra.ProductRepository;
 import com.kyupid.kshop.product.infra.ReservedStockRepository;
+import com.kyupid.kshop.product.presentation.dto.AdjustmentType;
 import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
 import com.kyupid.kshop.product.presentation.dto.StockAdjustment;
 import lombok.RequiredArgsConstructor;
@@ -29,38 +30,55 @@ public class StockService {
 
         List<ReservedStock> rsList = new ArrayList<>();
         List<Long> stockValidation = new ArrayList<>();
-        for (StockAdjustment sa : saList) {
-            Product product = productRepository.findById(sa.getProductId())
-                    .orElseThrow(() -> new ProductNotFoundException(sa.getProductId()));
-            sa.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
+        List<Long> reservedStockIdList = new ArrayList<>();
+        for (StockAdjustment stockAdjustment : saList) {
+            Product product = productRepository.findById(stockAdjustment.getProductId())
+                    .orElseThrow(() -> new ProductNotFoundException(stockAdjustment.getProductId()));
+            ReservedStock reservedStock = reservedStockRepository
+                    .findByProductIdAndStatus(stockAdjustment.getProductId(), Status.RESERVED);
 
-            validateStock(stockValidation, sa, product);
+            stockAdjustment.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
 
-            rsList.add(new ReservedStock(product, sa));
+            storeStockValidation(stockValidation, stockAdjustment, product, reservedStock); // 1. stock 체크
+            storeReservedStockToSave(rsList, stockAdjustment, product); // 2. db에 저장할 RS
+            storeReservedStockId(reservedStockIdList, reservedStock); // 3. confirm 수행 하기위해 리턴
         }
+        stockValidation(stockValidation);
+
+        reservedStockRepository.saveAll(rsList);
+        return new OrderProductInternalReqRes(saList, reservedStockIdList);
+    }
+
+    private void stockValidation(List<Long> stockValidation) {
         if (stockValidation.size() > 0) {
             throw new NotEnoughStockException(stockValidation);
         }
-
-        reservedStockRepository.saveAll(rsList);
-        return new OrderProductInternalReqRes(saList);
     }
 
-    private void validateStock(List<Long> stockValidation, StockAdjustment sa, Product product) {
-        int availableStock = getAvailableStock(sa, product);
+    private void storeReservedStockToSave(List<ReservedStock> rsList, StockAdjustment sa, Product product) {
+        rsList.add(new ReservedStock(product, sa, AdjustmentType.DECREASE));
+    }
+
+    private void storeStockValidation(List<Long> stockValidation, StockAdjustment sa, Product product, ReservedStock rs) {
+        int availableStock = getAvailableStock(product, rs);
 
         if (sa.getQuantity() > availableStock) {
             stockValidation.add(sa.getProductId());
         } // 디비 io 줄이고싶다면 바로 throw 해도 될듯
     }
 
-    private int getAvailableStock(StockAdjustment sa, Product product) {
+    private int getAvailableStock(Product product, ReservedStock rs) {
         int reservedQuantity = 0;
-        ReservedStock reservedStock = reservedStockRepository.findByProductIdAndStatus(sa.getProductId(), Status.RESERVED);
-
-        if (reservedStock != null) {
-            reservedQuantity = reservedStock.getReservedQuantity();
+        if (rs != null) {
+            reservedQuantity = rs.getReservedQuantity();
         }
-        return product.getStock() - reservedQuantity;
+        int availableStock = product.getStock() - reservedQuantity;
+        return availableStock;
+    }
+
+    private void storeReservedStockId(List<Long> reservedStockIdList, ReservedStock reservedStock) {
+        if (reservedStock != null) {
+            reservedStockIdList.add(reservedStock.getId());
+        }
     }
 }

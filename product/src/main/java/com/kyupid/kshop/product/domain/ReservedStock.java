@@ -35,10 +35,10 @@ public class ReservedStock {
     protected ReservedStock() {
     }
 
-    public ReservedStock(Product product, StockAdjustment sa) {
+    public ReservedStock(Product product, StockAdjustment sa, AdjustmentType adjustmentType) {
         this.product = product;
         this.reservedQuantity = sa.getQuantity();
-        this.adjustmentType = sa.getAdjustmentType();
+        this.adjustmentType = adjustmentType;
         this.created = LocalDateTime.now();
         this.status = Status.RESERVED;
     }
