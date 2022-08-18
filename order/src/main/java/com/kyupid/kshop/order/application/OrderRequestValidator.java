@@ -30,8 +30,6 @@ public class OrderRequestValidator {
                 for (StockAdjustment sd : orderRequest.getStockAdjustmentList()) {
                     if (sd.getProductId() == null)
                         errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getProductId", PROPERTY_REQUIRED));
-                    if (sd.getAdjustmentType() == null)
-                        errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getQuantity", PROPERTY_REQUIRED));
                     if (sd.getQuantity() == null) {
                         errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getQuantity", PROPERTY_REQUIRED));
                     } else if (sd.getQuantity() < 1) {
