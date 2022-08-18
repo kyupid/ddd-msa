@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class OrderRequest {
-    private List<StockAdjustment> orderProductList;
+    private List<StockAdjustment> stockAdjustment;
     private Long ordererMemberId;
     private DeliveryInfo deliveryInfo;
 

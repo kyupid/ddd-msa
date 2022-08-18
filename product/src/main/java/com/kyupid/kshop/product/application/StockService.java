@@ -26,7 +26,7 @@ public class StockService {
             System.out.println("stockAdjustment :" + stockAdjustment);
             list.add(stockAdjustment);
         }
-        System.out.println("getPrice 끝!!!!!");
+        System.out.println("reserveStock 끝!!!!!");
         return new OrderProductInternalReqRes(list);
     }
 }
