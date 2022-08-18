@@ -39,15 +39,12 @@ public class ReserveStockService {
                     .findReservedStock(stockAdjustment.getProductId(), Status.RESERVED, LocalDateTime.now());
 
             log.info("reservedStock: {}", reservedStock);
-
             stockAdjustment.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
 
-            if (reservedStock != null) {
-                storeStockValidation(stockValidation, stockAdjustment, reservedStock); // 1.stock 체크
-            }
+            validateAvailableStock(stockValidation, stockAdjustment, product, reservedStock); // 1. validate Stock
             storeReservedStockToSave(rsList, stockAdjustment, product); // 2. db에 저장할 RS
         }
-        stockValidation(stockValidation);
+        processStockValidation(stockValidation);
 
         reservedStockRepository.saveAll(rsList);
 
@@ -58,14 +55,19 @@ public class ReserveStockService {
         return new OrderProductInternalReqRes(saList, reservedStockIdList);
     }
 
-    private void storeStockValidation(List<Long> stockValidation, StockAdjustment stockAdjustment, ReservedStock reservedStock) {
-        Boolean stockAvailable = reservedStock.isStockAvailable(stockAdjustment.getQuantity());
-        if (!stockAvailable) {
-            stockValidation.add(stockAdjustment.getProductId());
+    private void validateAvailableStock(List<Long> stockValidation, StockAdjustment stockAdjustment, Product product, ReservedStock reservedStock) {
+        int availableStock;
+        if (reservedStock != null) {
+            availableStock = reservedStock.availableStock(stockAdjustment.getQuantity());
+        } else {
+            availableStock = product.getStock();
+        }
+        if (stockAdjustment.getQuantity() > availableStock) {
+            stockValidation.add(product.getId());
         }
     }
 
-    private void stockValidation(List<Long> stockValidation) {
+    private void processStockValidation(List<Long> stockValidation) {
         if (stockValidation.size() > 0) {
             throw new NotEnoughStockException(stockValidation);
         }

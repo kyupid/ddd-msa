@@ -53,8 +53,7 @@ public class ReservedStock {
         this.status = Status.CONFIRMED;
     }
 
-    public Boolean isStockAvailable(Integer requestQuantity) {
-        int availableStock = getProduct().getStock() - this.reservedQuantity;
-        return requestQuantity > availableStock;
+    public int availableStock(Integer requestQuantity) {
+        return getProduct().getStock() - this.reservedQuantity;
     }
 }
