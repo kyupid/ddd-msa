@@ -18,7 +18,7 @@ public class ProductRepositoryImpl implements ProductRepository {
      */
     @Override
     public OrderProductInternalReqRes getProductPrice(OrderProductInternalReqRes request) {
-        String URI = "/api/products/price";
+        String URI = "/api/products/stock";
         return RestClient.process(request, REQUEST_URL + URI);
     }
 

@@ -16,9 +16,8 @@ public class GetProductPriceService {
 
     private final ProductRepository productRepository;
 
-    public OrderProductInternalReqRes getPrice(OrderProductInternalReqRes request) {
-        // 1. 수량ㅇ있는지체크
-        // 2. 있으면 가져오고
+    public OrderProductInternalReqRes reserveStock(OrderProductInternalReqRes request) {
+
         List<StockAdjustment> list = new ArrayList<>();
         for (StockAdjustment sa : request.getStockAdjustmentList()) {
             StockAdjustment stockAdjustment = productRepository.findOrderProductWithPrice(sa.getProductId(), sa.getQuantity())

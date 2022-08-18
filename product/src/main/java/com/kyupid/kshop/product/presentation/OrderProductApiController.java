@@ -15,8 +15,8 @@ public class OrderProductApiController {
 
     private final GetProductPriceService getProductPriceService;
 
-    @PostMapping("/price")
-    public OrderProductInternalReqRes getProductPrice(@RequestBody OrderProductInternalReqRes request) {
-        return getProductPriceService.getPrice(request);
+    @PostMapping("/stock")
+    public OrderProductInternalReqRes reserveStock(@RequestBody OrderProductInternalReqRes request) {
+        return getProductPriceService.reserveStock(request);
     }
 }

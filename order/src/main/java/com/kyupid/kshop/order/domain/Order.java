@@ -35,8 +35,7 @@ public class Order {
     private LocalDateTime orderDate;
 
     @Builder
-    public Order(List<OrderProduct> orderProductList, OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo, LocalDateTime orderDate) {
-        this.orderProductList = orderProductList;
+    public Order(OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo, LocalDateTime orderDate) {
         this.orderStatus = orderStatus;
         this.ordererMemberId = ordererMemberId;
         this.deliveryInfo = deliveryInfo;

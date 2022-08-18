@@ -1,14 +1,15 @@
 package com.kyupid.kshop.order.application;
 
-import com.kyupid.kshop.order.domain.Order;
-import com.kyupid.kshop.order.domain.OrderRepository;
-import com.kyupid.kshop.order.domain.ProductRepository;
+import com.kyupid.kshop.order.domain.*;
 import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
+import com.kyupid.kshop.order.infra.StockAdjustment;
 import com.kyupid.kshop.order.presentation.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ import java.util.List;
 public class PlaceOrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
 
     public Order placeOrder(OrderRequest orderRequest) {
@@ -24,16 +26,35 @@ public class PlaceOrderService {
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         // TODO: price 가져온걸로 order만들기
-        OrderProductInternalReqRes productPrice = productRepository.getProductPrice(new OrderProductInternalReqRes(orderRequest.getOrderProductList()));
-        System.out.println("productPrice.toString(): " + productPrice.toString());
+        OrderProductInternalReqRes op = productRepository.getProductPrice(new OrderProductInternalReqRes(orderRequest.getOrderProductList()));
 
+        Order order = Order.builder() // 이걸 orderproduct에 넣는다
+                .ordererMemberId(orderRequest.getOrdererMemberId())
+                .orderDate(LocalDateTime.now())
+                .orderStatus(OrderStatus.PAYMENT_WAITING) // 결제 도메인이없으므로 모두 PAYMENT_WAITING
+                .deliveryInfo(orderRequest.getDeliveryInfo())
+                .build();
+
+        List<StockAdjustment> sdList = op.getStockAdjustmentList();
+        List<OrderProduct> opList = new ArrayList<>();
+        for (StockAdjustment sd : sdList) {
+            OrderProduct orderProduct = OrderProduct.builder()
+                    .order(order)
+                    .productId(sd.getProductId())
+                    .price(sd.getPricePerProduct())
+                    .orderQuantity(sd.getQuantity())
+                    .build();
+            opList.add(orderProduct);
+        }
+
+        orderProductRepository.saveAll(opList);
 
         // TODO 세이브 완료되면 commit API back 하기
-//        orderRepository.save(order);
-//        return order;
+        orderRepository.save(order);
+        return order;
 
-        System.out.println("placeOrder 끝");
-        return null;
+//        System.out.println("placeOrder 끝");
+//        return null;
     }
 
     private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {

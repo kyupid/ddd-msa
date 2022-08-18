@@ -9,10 +9,10 @@ import java.util.List;
 @Getter
 public class OrderRequest {
     private List<StockAdjustment> orderProductList;
-    private Long ordererId;
+    private Long ordererMemberId;
     private DeliveryInfo deliveryInfo;
 
-    public void setOrdererId(Long ordererId) {
-        this.ordererId = ordererId;
+    public void setOrdererId(Long ordererMemberId) {
+        this.ordererMemberId = ordererMemberId;
     }
 }

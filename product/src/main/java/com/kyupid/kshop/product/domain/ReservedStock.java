@@ -35,6 +35,7 @@ public class ReservedStock {
             e.printStackTrace();
         }
         this.created = LocalDateTime.now();
+        this.status = Status.RESERVED;
     }
 
     public StockAdjustment getResources() {
