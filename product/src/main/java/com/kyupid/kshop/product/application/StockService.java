@@ -36,7 +36,7 @@ public class StockService {
 
         for (StockAdjustment sa : saList) {
             Integer productPrice = productRepository.findPriceByProductIdAndOrderQuantity(sa.getProductId(), sa.getQuantity())
-                    .orElseThrow(() -> new NoSuchElementException(sa.getProductId().toString())); // TODO: order 도메인에서 예외처리
+                    .orElseThrow(() -> new NoSuchElementException(sa.getProductId().toString())); // TODO: [order]GeneralNotFoundException
             sa.setPricePerProduct(productPrice);
             System.out.println("stockAdjustment :" + sa);
         }
