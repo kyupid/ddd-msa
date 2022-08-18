@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class OrderProductInternalReqRes {
     private List<StockAdjustment> stockAdjustmentList;
     private List<Long> reservedStockIdList;

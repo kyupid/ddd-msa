@@ -37,7 +37,7 @@ public class ControllerExceptionAdvice {
 
     @ExceptionHandler({ExternalApiServerException.class})
     public ResponseEntity<Object> handleExternalApiServerException(ExternalApiServerException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getResult().toMap());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getResult().toMap());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
