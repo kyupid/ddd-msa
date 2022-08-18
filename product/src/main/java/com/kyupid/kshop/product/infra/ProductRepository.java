@@ -14,4 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p.price from Product p where p.id = :productId and p.stock >= :orderQuantity")
     Optional<Integer> findPriceByProductIdAndOrderQuantity(@Param("productId") Long productId,
                                                       @Param("orderQuantity") Integer orderQuantity);
+
+    @Query("select p.stock from Product p where p.id = :productId")
+    Optional<Integer> findStockById(Long productId);
 }

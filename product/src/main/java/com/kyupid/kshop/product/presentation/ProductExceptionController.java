@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @ControllerAdvice
 @ResponseBody
-public class ControllerExceptionAdvice {
+public class ProductExceptionController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)

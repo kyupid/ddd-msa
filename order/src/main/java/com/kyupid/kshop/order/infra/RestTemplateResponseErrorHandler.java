@@ -23,6 +23,8 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
         } else if (httpResponse.getStatusCode().series() == CLIENT_ERROR) {
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 throw new GeneralNotFoundException(); //TODO: 어떤 품목들이 없는지 체크해서 response해야함
+            } else if (httpResponse.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                throw new GeneralNotFoundException();
             }
         }
     }
