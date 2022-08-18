@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.infra;
 
 import com.kyupid.kshop.order.domain.ProductRepository;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,7 +20,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public OrderProductInternalReqRes reserveStock(OrderProductInternalReqRes request) {
         String URI = "/api/products/stock";
-        return RestClient.process(request, REQUEST_URL + URI);
+        return RestClient.process(request, REQUEST_URL + URI, new ParameterizedTypeReference<OrderProductInternalReqRes>() {});
     }
 
 //    public boolean commitSubtractQuantity4Product() {
