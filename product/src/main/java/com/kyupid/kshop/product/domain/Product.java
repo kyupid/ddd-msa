@@ -19,9 +19,6 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ReservedStock> reservedStockList = new ArrayList<>();
-
     @Column(unique = true)
     private String name;
 
@@ -30,9 +27,8 @@ public class Product {
     @ColumnDefault("0")
     private Integer stock;
 
-    public Product(String name) {
-        this.name = name;
-    }
+    @Version
+    private Integer version;
 
     public Product(String name, Integer price, Integer stock) {
         this.name = name;
@@ -43,14 +39,6 @@ public class Product {
     public void changeAllInfo(Product changingProduct) {
         this.name = changingProduct.getName();
         this.price = changingProduct.getPrice();
-    }
-
-    public void changeName(String name) {
-        this.name = name;
-    }
-
-    public void changePrice(Integer price) {
-        this.price = price;
     }
 
     public void commitStockSubtraction(Integer reservedQuantity) {
