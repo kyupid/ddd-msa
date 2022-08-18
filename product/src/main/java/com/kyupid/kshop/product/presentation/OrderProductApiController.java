@@ -2,6 +2,7 @@ package com.kyupid.kshop.product.presentation;
 
 import com.kyupid.kshop.product.application.stock.ConfirmStockService;
 import com.kyupid.kshop.product.application.stock.ReserveStockService;
+import com.kyupid.kshop.product.presentation.dto.ConfirmStockRequest;
 import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class OrderProductApiController {
     }
 
     @PutMapping("/confirm/stock")
-    public void reserveStock(@RequestBody List<Long> reservedStockIdList) {
-        confirmStockService.confirmStock(reservedStockIdList);
+    public void reserveStock(@RequestBody ConfirmStockRequest request) {
+        confirmStockService.confirmStock(request);
     }
 }

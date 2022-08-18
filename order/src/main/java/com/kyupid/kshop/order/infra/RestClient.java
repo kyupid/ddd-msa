@@ -3,10 +3,7 @@ package com.kyupid.kshop.order.infra;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,7 +32,7 @@ public class RestClient {
 
         HttpEntity<T> entity = new HttpEntity<>(body, headers);
         ResponseEntity<S> response = restTemplate.exchange(requestUrl, HttpMethod.POST, entity, responseType);
-        log.info("response: " + response);
+        log.info("response postExchange: " + response);
         return response.getBody();
     }
 
@@ -45,7 +42,7 @@ public class RestClient {
 
         HttpEntity<T> entity = new HttpEntity<>(body, headers);
         ResponseEntity<S> response = restTemplate.exchange(requestUrl, HttpMethod.PUT, entity, responseType);
-        log.info("response: " + response);
+        log.info("response putExchange: " + response);
         return response.getBody();
     }
 }

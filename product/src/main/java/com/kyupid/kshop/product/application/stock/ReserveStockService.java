@@ -38,17 +38,23 @@ public class ReserveStockService {
             ReservedStock reservedStock = reservedStockRepository // TODO: expires 지난건 스케줄러로 상태 TIMEOUT으로 변경
                     .findReservedStock(stockAdjustment.getProductId(), Status.RESERVED, LocalDateTime.now());
 
+            log.info("reservedStock: {}", reservedStock);
+
             stockAdjustment.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
 
             if (reservedStock != null) {
                 storeStockValidation(stockValidation, stockAdjustment, reservedStock); // 1.stock 체크
-                storeReservedStockId(reservedStockIdList, reservedStock); // 2. confirm 수행 하기위해 리턴
             }
-            storeReservedStockToSave(rsList, stockAdjustment, product); // 3. db에 저장할 RS
+            storeReservedStockToSave(rsList, stockAdjustment, product); // 2. db에 저장할 RS
         }
         stockValidation(stockValidation);
 
         reservedStockRepository.saveAll(rsList);
+
+        // 3. confirm 수행 하기위해 리턴
+        for (ReservedStock rs : rsList) {
+            storeReservedStockId(reservedStockIdList, rs);
+        }
         return new OrderProductInternalReqRes(saList, reservedStockIdList);
     }
 

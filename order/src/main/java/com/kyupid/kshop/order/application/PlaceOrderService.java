@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.domain.*;
+import com.kyupid.kshop.order.infra.ConfirmStockRequest;
 import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
 import com.kyupid.kshop.order.infra.StockAdjustment;
 import com.kyupid.kshop.order.presentation.OrderRequest;
@@ -56,9 +57,8 @@ public class PlaceOrderService {
         // TODO 세이브 완료되면 commit API back 하기
         orderProductRepository.saveAll(opList);
 
-
-        productRepository.confirmStock(op.getReservedStockIdList());
-
+        log.info("getReservedStockIdList: {}", op.getReservedStockIdList());
+        productRepository.confirmStock(new ConfirmStockRequest(op.getReservedStockIdList()));
         return order;
     }
 

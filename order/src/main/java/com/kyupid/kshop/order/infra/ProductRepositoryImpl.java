@@ -11,18 +11,7 @@ import java.util.List;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
-    private static final RestTemplate restTemplate;
-    private static final String API_KEY = "HELLOWORLD";
     private static final String REQUEST_URL = "http://localhost:8080";
-
-    static {
-        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        restTemplate = restTemplateBuilder
-                .setConnectTimeout(Duration.ofSeconds(5)) // 타임아웃 설정 5초
-                .errorHandler(new RestTemplateResponseErrorHandler())
-                .build();
-
-    }
 
     /**
      * Product 애그리거트로 아래 파라미터를 통해서 수량을 validate하고
@@ -37,8 +26,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void confirmStock(List<Long> reservedStockIdList) {
+    public void confirmStock(ConfirmStockRequest confirmStockRequest) {
         String URI = "/api/products/confirm/stock";
-        RestClient.putExchange(reservedStockIdList, REQUEST_URL + URI, new ParameterizedTypeReference<Void>() {});
+        RestClient.putExchange(confirmStockRequest, REQUEST_URL + URI, new ParameterizedTypeReference<Void>() {});
     }
 }
