@@ -26,7 +26,7 @@ public class PlaceOrderService {
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         // TODO: price 가져온걸로 order만들기
-        OrderProductInternalReqRes op = productRepository.reserveStock(new OrderProductInternalReqRes(orderRequest.getOrderProductList()));
+        OrderProductInternalReqRes op = productRepository.reserveStock(new OrderProductInternalReqRes(orderRequest.getStockAdjustment()));
 
         Order order = Order.builder() // 이걸 orderproduct에 넣는다
                 .ordererMemberId(orderRequest.getOrdererMemberId())
