@@ -41,7 +41,7 @@ public class ReserveStockService {
             log.info("reservedStock: {}", reservedStock);
             stockAdjustment.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
 
-            validateAvailableStock(stockValidation, stockAdjustment, product, reservedStock); // 1. validate Stock
+            storeNotAvailableProductId(stockValidation, stockAdjustment, product, reservedStock); // 1. 재고없는지 체크
             storeReservedStockToSave(rsList, stockAdjustment, product); // 2. db에 저장할 RS
         }
         processStockValidation(stockValidation);
@@ -55,7 +55,7 @@ public class ReserveStockService {
         return new OrderProductInternalReqRes(saList, reservedStockIdList);
     }
 
-    private void validateAvailableStock(List<Long> stockValidation, StockAdjustment stockAdjustment, Product product, ReservedStock reservedStock) {
+    private void storeNotAvailableProductId(List<Long> stockValidation, StockAdjustment stockAdjustment, Product product, ReservedStock reservedStock) {
         int availableStock;
         if (reservedStock != null) {
             availableStock = reservedStock.availableStock(stockAdjustment.getQuantity());
