@@ -40,6 +40,10 @@ public class ProductService {
     public Product editProduct(Long productId, Product changingProduct) {
         Product productById = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
+        boolean hasSameName = productRepository.existsByName(changingProduct.getName());
+        if (hasSameName) {
+            throw new DuplicatedNameException();
+        }
         productById.changeAllInfo(changingProduct);
         return productById;
     }
