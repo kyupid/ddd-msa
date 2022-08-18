@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -30,10 +31,11 @@ public class StockService {
         List<StockAdjustment> saList = request.getStockAdjustmentList();
 
         // 1-1. stock 있는지 없는지 체크
+        List<Long> stockValidation = new ArrayList<>();
         for (StockAdjustment sa : saList) {
             // 1-1-1. ReservedStock.status == RESERVED, ReservedStock.sa.productId == ReservedStock.productId 의 quantity
             Integer stock = productRepository.findStockById(sa.getProductId())
-                    .orElseThrow(() -> new NoSuchElementException(sa.getProductId().toString()));
+                    .orElseThrow(() -> new ProductNotFoundException(sa.getProductId()));
 
             log.info("stock: {}", stock);
 
@@ -44,8 +46,11 @@ public class StockService {
             log.info("availabeStock: {}", stock);
 
             if (sa.getQuantity() > availableStock) {
-                throw new NotEnoughStockException();
+                stockValidation.add(sa.getProductId());
             }
+        }
+        if (stockValidation.size() > 0) {
+            throw new NotEnoughStockException(stockValidation);
         }
 
         List<ReservedStock> rsList = saList.stream()
@@ -57,7 +62,7 @@ public class StockService {
         // 2. saList prices
         for (StockAdjustment sa : saList) {
             Integer productPrice = productRepository.findPriceByProductIdAndOrderQuantity(sa.getProductId(), sa.getQuantity())
-                    .orElseThrow(() -> new NoSuchElementException(sa.getProductId().toString())); // TODO: [order]GeneralNotFoundException
+                    .orElseThrow(() -> new ProductNotFoundException(sa.getProductId())); // TODO: [order]GeneralNotFoundException
             sa.setPricePerProduct(productPrice);
             System.out.println("stockAdjustment :" + sa);
         }

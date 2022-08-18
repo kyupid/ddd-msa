@@ -1,10 +1,8 @@
-package com.kyupid.kshop.product.presentation.dto;
+package com.kyupid.kshop.order.presentation.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExceptionResponse<T> {
 
     private final T data;

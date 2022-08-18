@@ -20,7 +20,7 @@ public class ProductService {
 
     public Product showProductById(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new NoSuchElementException(productId.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(productId));
     }
 
     public Page<Product> showProductsByPagination(Pageable pageable) {
@@ -39,7 +39,7 @@ public class ProductService {
     @Transactional
     public Product editProduct(Long productId, Product changingProduct) {
         Product productById = productRepository.findById(productId)
-                .orElseThrow(() -> new NoSuchElementException(productId.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(productId));
         productById.changeAllInfo(changingProduct);
         return productById;
     }
@@ -47,7 +47,7 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Long productId) {
         if (!productRepository.existsById(productId)) {
-            throw new NoSuchElementException(productId.toString());
+            throw new ProductNotFoundException(productId);
         }
 
         productRepository.deleteById(productId);
