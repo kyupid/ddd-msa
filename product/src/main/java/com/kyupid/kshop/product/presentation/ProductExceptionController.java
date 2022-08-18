@@ -2,7 +2,7 @@ package com.kyupid.kshop.product.presentation;
 
 import com.kyupid.kshop.product.application.ProductId;
 import com.kyupid.kshop.product.application.ProductNotFoundException;
-import com.kyupid.kshop.product.exception.DuplicatedNameException;
+import com.kyupid.kshop.product.application.DuplicatedNameException;
 import com.kyupid.kshop.product.presentation.dto.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.NoSuchElementException;
 
 @Slf4j
 @ControllerAdvice
@@ -26,7 +24,7 @@ public class ProductExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicatedNameException.class)
-    public ExceptionResponse handleDuplicatedName() {
-        return new ExceptionResponse("Duplicated Name");
+    public ExceptionResponse<String> handleDuplicatedName() {
+        return new ExceptionResponse<>("상품 이름이 중복입니다.");
     }
 }

@@ -2,14 +2,11 @@ package com.kyupid.kshop.product.application;
 
 import com.kyupid.kshop.product.domain.Product;
 import com.kyupid.kshop.product.infra.ProductRepository;
-import com.kyupid.kshop.product.exception.DuplicatedNameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

@@ -21,7 +21,7 @@ public class InitProductsData {
      */
     @PostConstruct
     public void initProducts() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             Product product = new Product("Product" + i, 100 * i, 10);
             productService.createProduct(product);
         }
