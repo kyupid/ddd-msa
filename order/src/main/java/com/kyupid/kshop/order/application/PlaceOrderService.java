@@ -1,10 +1,8 @@
 package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.domain.*;
-import com.kyupid.kshop.order.infra.ConfirmStockRequest;
-import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
-import com.kyupid.kshop.order.infra.StockAdjustment;
-import com.kyupid.kshop.order.presentation.OrderRequest;
+import com.kyupid.kshop.order.infra.*;
+import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,17 +25,18 @@ public class PlaceOrderService {
         List<ValidationError> errors = validateOrderRequest(orderRequest);
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
-        // TODO: price 가져온걸로 order만들기
+        // 1. stock을 reserve 한다.
         OrderProductInternalReqRes op = productRepository.reserveStock(new OrderProductInternalReqRes(orderRequest.getStockAdjustmentList()));
 
-        Order order = Order.builder() // 이걸 orderproduct에 넣는다
+        // 2. order 생성
+        Order order = Order.builder()
                 .ordererMemberId(orderRequest.getOrdererMemberId())
                 .orderStatus(OrderStatus.PAYMENT_WAITING) // 결제 도메인이없으므로 모두 PAYMENT_WAITING
                 .deliveryInfo(orderRequest.getDeliveryInfo())
                 .build();
-
         orderRepository.save(order);
 
+        // 3. OrderProduct 생성
         List<StockAdjustment> sdList = op.getStockAdjustmentList();
         List<OrderProduct> opList = new ArrayList<>();
         for (StockAdjustment sd : sdList) {
@@ -49,15 +48,10 @@ public class PlaceOrderService {
                     .build();
             opList.add(orderProduct);
         }
-
-        log.info("order: {}", order);
-        log.info("opList: {}", opList);
-        // TODO 세이브 완료되면 commit API back 하기
         orderProductRepository.saveAll(opList);
 
-        log.info("getReservedStockIdList: {}", op.getReservedStockIdList());
+        // 4. reserve 된 stock 을 confrim 한다
         productRepository.confirmStock(new ConfirmStockRequest(op.getReservedStockIdList()));
-
         return opList;
     }
 

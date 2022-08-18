@@ -2,8 +2,9 @@ package com.kyupid.kshop.order.presentation;
 
 import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
-import com.kyupid.kshop.order.domain.Order;
-import com.kyupid.kshop.order.domain.OrderProduct;
+import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
+import com.kyupid.kshop.order.presentation.dto.OrderRequest;
+import com.kyupid.kshop.order.presentation.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

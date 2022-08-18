@@ -1,8 +1,6 @@
-package com.kyupid.kshop.order.presentation;
+package com.kyupid.kshop.order.presentation.dto;
 
 import com.kyupid.kshop.order.domain.DeliveryInfo;
-import com.kyupid.kshop.order.domain.Order;
-import com.kyupid.kshop.order.domain.OrderProduct;
 import lombok.Getter;
 
 import java.util.List;

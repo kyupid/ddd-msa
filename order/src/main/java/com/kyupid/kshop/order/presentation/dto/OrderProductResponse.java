@@ -1,4 +1,4 @@
-package com.kyupid.kshop.order.presentation;
+package com.kyupid.kshop.order.presentation.dto;
 
 import com.kyupid.kshop.order.domain.OrderProduct;
 import com.kyupid.kshop.order.domain.OrderStatus;

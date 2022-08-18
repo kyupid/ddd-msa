@@ -7,10 +7,6 @@ import org.json.JSONObject;
 public class ExternalApiServerException extends RuntimeException {
     private final JSONObject result;
 
-    public ExternalApiServerException() {
-        this.result = null;
-    }
-
     public ExternalApiServerException(JSONObject result) {
         this.result = result;
     }

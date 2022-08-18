@@ -2,7 +2,7 @@ package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.domain.Order;
 import com.kyupid.kshop.order.domain.OrderRepository;
-import com.kyupid.kshop.order.presentation.OrderRequest;
+import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.infra.StockAdjustment;
-import com.kyupid.kshop.order.presentation.OrderRequest;
+import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 
 import java.util.ArrayList;
 import java.util.List;
