@@ -3,11 +3,13 @@ package com.kyupid.kshop.order.presentation;
 import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
 import com.kyupid.kshop.order.domain.Order;
+import com.kyupid.kshop.order.domain.OrderProduct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // TODO: HttpServletRequest -> 어노테이션으로 memberId 매핑하기
 @RestController
@@ -34,8 +36,10 @@ public class OrderController {
     @PostMapping
     public OrderResponse orderProduct(@RequestBody OrderRequest orderRequest) {
         orderRequest.setOrdererId(TEMP_MEMBER_ID);
-        Order order = placeOrderService.placeOrder(orderRequest);
-        return OrderResponse.from(order);
+        List<OrderProductResponse> oprList = placeOrderService.placeOrder(orderRequest).stream()
+                .map(OrderProductResponse::from)
+                .collect(Collectors.toList());
+        return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), orderRequest.getDeliveryInfo());
     }
 
     @PutMapping("/{orderId}")
@@ -47,7 +51,6 @@ public class OrderController {
 
         orderService.changeOrder(orderRequest, orderId);
         // 상품 수량 변경 -> product api
-
         return null;
     }
 

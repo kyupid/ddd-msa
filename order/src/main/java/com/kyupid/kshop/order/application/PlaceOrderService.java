@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class PlaceOrderService {
     private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
 
-    public Order placeOrder(OrderRequest orderRequest) {
+    public List<OrderProduct> placeOrder(OrderRequest orderRequest) {
         List<ValidationError> errors = validateOrderRequest(orderRequest);
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
@@ -33,7 +32,6 @@ public class PlaceOrderService {
 
         Order order = Order.builder() // 이걸 orderproduct에 넣는다
                 .ordererMemberId(orderRequest.getOrdererMemberId())
-                .orderDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.PAYMENT_WAITING) // 결제 도메인이없으므로 모두 PAYMENT_WAITING
                 .deliveryInfo(orderRequest.getDeliveryInfo())
                 .build();
@@ -59,7 +57,8 @@ public class PlaceOrderService {
 
         log.info("getReservedStockIdList: {}", op.getReservedStockIdList());
         productRepository.confirmStock(new ConfirmStockRequest(op.getReservedStockIdList()));
-        return order;
+
+        return opList;
     }
 
     private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {

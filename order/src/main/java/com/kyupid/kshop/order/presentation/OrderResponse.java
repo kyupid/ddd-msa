@@ -9,17 +9,13 @@ import java.util.List;
 
 @Getter
 public class OrderResponse {
-    private List<OrderProduct> orderProductList;
+    private List<OrderProductResponse> orderProductList;
     private Long ordererId;
     private DeliveryInfo deliveryInfo;
 
-    public OrderResponse(List<OrderProduct> orderProductList, Long ordererId, DeliveryInfo deliveryInfo) {
+    public OrderResponse(List<OrderProductResponse> orderProductList, Long ordererId, DeliveryInfo deliveryInfo) {
         this.orderProductList = orderProductList;
         this.ordererId = ordererId;
         this.deliveryInfo = deliveryInfo;
-    }
-
-    public static OrderResponse from(Order o) {
-        return new OrderResponse(o.getOrderProductList(), o.getOrderId(), o.getDeliveryInfo());
     }
 }

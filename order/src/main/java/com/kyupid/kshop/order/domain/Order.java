@@ -33,10 +33,10 @@ public class Order {
     private LocalDateTime orderDate;
 
     @Builder
-    public Order(OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo, LocalDateTime orderDate) {
+    public Order(OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo) {
         this.orderStatus = orderStatus;
         this.ordererMemberId = ordererMemberId;
         this.deliveryInfo = deliveryInfo;
-        this.orderDate = orderDate;
+        this.orderDate = LocalDateTime.now();
     }
 }
