@@ -26,16 +26,18 @@ public class OrderRequestValidator {
             if (orderRequest.getStockAdjustmentList().isEmpty()) {
                 errors.add(ValidationError.of("stockAdjustmentList", PROPERTY_REQUIRED));
             } else {
+                int count = 0;
                 for (StockAdjustment sd : orderRequest.getStockAdjustmentList()) {
                     if (sd.getProductId() == null)
-                        errors.add(ValidationError.of("stockAdjustment.getProductId", PROPERTY_REQUIRED));
+                        errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getProductId", PROPERTY_REQUIRED));
                     if (sd.getAdjustmentType() == null)
-                        errors.add(ValidationError.of("stockAdjustment.getQuantity", PROPERTY_REQUIRED));
+                        errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getQuantity", PROPERTY_REQUIRED));
                     if (sd.getQuantity() == null) {
-                        errors.add(ValidationError.of("stockAdjustment.getQuantity", PROPERTY_REQUIRED));
+                        errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getQuantity", PROPERTY_REQUIRED));
                     } else if (sd.getQuantity() < 1) {
-                        errors.add(ValidationError.of("stockAdjustment.getQuantity", QUANTITY_NOT_ACCEPTED));
+                        errors.add(ValidationError.of("stockAdjustment" + "[" + count + "]." + "getQuantity", QUANTITY_NOT_ACCEPTED));
                     }
+                    count++;
                 }
             }
             if (orderRequest.getDeliveryInfo() == null) {
