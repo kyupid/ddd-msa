@@ -40,9 +40,11 @@ public class ReserveStockService {
 
             stockAdjustment.setPricePerProduct(product.getPrice()); // Order 로 넘겨줌
 
-            storeStockValidation(stockValidation, stockAdjustment, reservedStock); // 1.stock 체크
-            storeReservedStockToSave(rsList, stockAdjustment, product); // 2. db에 저장할 RS
-            storeReservedStockId(reservedStockIdList, reservedStock); // 3. confirm 수행 하기위해 리턴
+            if (reservedStock != null) {
+                storeStockValidation(stockValidation, stockAdjustment, reservedStock); // 1.stock 체크
+                storeReservedStockId(reservedStockIdList, reservedStock); // 2. confirm 수행 하기위해 리턴
+            }
+            storeReservedStockToSave(rsList, stockAdjustment, product); // 3. db에 저장할 RS
         }
         stockValidation(stockValidation);
 
