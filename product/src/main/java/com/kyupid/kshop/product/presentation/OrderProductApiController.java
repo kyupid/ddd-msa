@@ -1,6 +1,6 @@
 package com.kyupid.kshop.product.presentation;
 
-import com.kyupid.kshop.product.application.GetProductPriceService;
+import com.kyupid.kshop.product.application.StockService;
 import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class OrderProductApiController {
 
-    private final GetProductPriceService getProductPriceService;
+    private final StockService stockService;
 
     @PostMapping("/stock")
     public OrderProductInternalReqRes reserveStock(@RequestBody OrderProductInternalReqRes request) {
-        return getProductPriceService.reserveStock(request);
+        return stockService.reserveStock(request);
     }
 }

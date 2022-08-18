@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-public class GetProductPriceService {
+public class StockService {
 
     private final ProductRepository productRepository;
 
