@@ -28,9 +28,10 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
         } else if (httpResponse.getStatusCode().series() == CLIENT_ERROR) {
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 JSONObject resultData = getJsonObject(httpResponse);
-                throw new ExternalApiServerException(resultData); //TODO: 어떤 품목들이 없는지 체크해서 response 해야함
+                throw new ExternalApiServerException(resultData);
             } else if (httpResponse.getStatusCode() == HttpStatus.BAD_REQUEST) {
-                throw new GeneralNotFoundException();
+                JSONObject resultData = getJsonObject(httpResponse);
+                throw new ExternalApiServerException(resultData);
             }
         }
     }

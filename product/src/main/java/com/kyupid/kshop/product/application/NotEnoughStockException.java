@@ -7,9 +7,9 @@ import java.util.List;
 @Getter
 public class NotEnoughStockException extends RuntimeException {
 
-    private List<Long> productIds;
+    private final ProductIdList productIds;
 
     public NotEnoughStockException(List<Long> productIds) {
-        this.productIds = productIds;
+        this.productIds = new ProductIdList(productIds);
     }
 }
