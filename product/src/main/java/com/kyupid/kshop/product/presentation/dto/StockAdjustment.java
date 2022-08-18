@@ -1,7 +1,11 @@
 package com.kyupid.kshop.product.presentation.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Setter
 @ToString
@@ -10,12 +14,4 @@ public class StockAdjustment {
     private Integer quantity;
     private AdjustmentType adjustmentType;
     private Integer pricePerProduct;
-
-    public StockAdjustment() {
-    }
-
-    public StockAdjustment(Long productId, Integer pricePerProduct) {
-        this.productId = productId;
-        this.pricePerProduct = pricePerProduct;
-    }
 }

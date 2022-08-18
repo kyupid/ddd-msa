@@ -1,18 +1,17 @@
 package com.kyupid.kshop.product.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kyupid.kshop.product.presentation.dto.AdjustmentType;
 import com.kyupid.kshop.product.presentation.dto.StockAdjustment;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 @ToString
 @Slf4j
+@Getter
 @Entity
 public class ReservedStock {
 
@@ -22,7 +21,9 @@ public class ReservedStock {
 
     private LocalDateTime created;
 
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private Integer reservedQuantity;
 
@@ -34,8 +35,8 @@ public class ReservedStock {
     protected ReservedStock() {
     }
 
-    public ReservedStock(StockAdjustment sa) {
-        this.productId = sa.getProductId();
+    public ReservedStock(Product product, StockAdjustment sa) {
+        this.product = product;
         this.reservedQuantity = sa.getQuantity();
         this.adjustmentType = sa.getAdjustmentType();
         this.created = LocalDateTime.now();
