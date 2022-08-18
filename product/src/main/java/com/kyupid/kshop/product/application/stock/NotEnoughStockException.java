@@ -1,5 +1,6 @@
-package com.kyupid.kshop.product.application;
+package com.kyupid.kshop.product.application.stock;
 
+import com.kyupid.kshop.product.application.ProductIdList;
 import lombok.Getter;
 
 import java.util.List;

@@ -5,6 +5,7 @@ import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
 import com.kyupid.kshop.order.infra.StockAdjustment;
 import com.kyupid.kshop.order.presentation.OrderRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -35,6 +37,8 @@ public class PlaceOrderService {
                 .deliveryInfo(orderRequest.getDeliveryInfo())
                 .build();
 
+        orderRepository.save(order);
+
         List<StockAdjustment> sdList = op.getStockAdjustmentList();
         List<OrderProduct> opList = new ArrayList<>();
         for (StockAdjustment sd : sdList) {
@@ -47,10 +51,14 @@ public class PlaceOrderService {
             opList.add(orderProduct);
         }
 
+        log.info("order: {}", order);
+        log.info("opList: {}", opList);
+        // TODO 세이브 완료되면 commit API back 하기
         orderProductRepository.saveAll(opList);
 
-        // TODO 세이브 완료되면 commit API back 하기
-        orderRepository.save(order);
+
+        productRepository.confirmStock(op.getReservedStockIdList());
+
         return order;
     }
 

@@ -42,4 +42,9 @@ public class ReservedStock {
         this.created = LocalDateTime.now();
         this.status = Status.RESERVED;
     }
+
+    public void updateStatusConfirmed() {
+        getProduct().commitStockSubtraction(this.reservedQuantity);
+        this.status = Status.CONFIRMED;
+    }
 }

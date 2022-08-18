@@ -52,4 +52,8 @@ public class Product {
     public void changePrice(Integer price) {
         this.price = price;
     }
+
+    public void commitStockSubtraction(Integer reservedQuantity) {
+        this.stock -= reservedQuantity;
+    }
 }

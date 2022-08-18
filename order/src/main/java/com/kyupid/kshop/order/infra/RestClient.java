@@ -27,18 +27,25 @@ public class RestClient {
     }
 
     /**
-     * Request, Response 에는 같은 DTO를 쓴다
      * Generic 활용해서 재활용성 높이기
      */
-    protected static <T> T process(T body, String requestUrl, ParameterizedTypeReference<T> responseType) {
-
+    protected static <T, S> S postExchange(T body, String requestUrl, ParameterizedTypeReference<S> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", API_KEY);
 
         HttpEntity<T> entity = new HttpEntity<>(body, headers);
-        ResponseEntity<T> response = restTemplate.exchange(requestUrl, HttpMethod.POST, entity, responseType);
+        ResponseEntity<S> response = restTemplate.exchange(requestUrl, HttpMethod.POST, entity, responseType);
         log.info("response: " + response);
+        return response.getBody();
+    }
 
+    protected static <T, S> S putExchange(T body, String requestUrl, ParameterizedTypeReference<S> responseType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", API_KEY);
+
+        HttpEntity<T> entity = new HttpEntity<>(body, headers);
+        ResponseEntity<S> response = restTemplate.exchange(requestUrl, HttpMethod.PUT, entity, responseType);
+        log.info("response: " + response);
         return response.getBody();
     }
 }

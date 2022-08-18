@@ -1,5 +1,6 @@
-package com.kyupid.kshop.product.application;
+package com.kyupid.kshop.product.application.stock;
 
+import com.kyupid.kshop.product.application.ProductNotFoundException;
 import com.kyupid.kshop.product.domain.Product;
 import com.kyupid.kshop.product.domain.ReservedStock;
 import com.kyupid.kshop.product.domain.Status;
@@ -14,12 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StockService {
+public class ReserveStockService {
 
     private final ProductRepository productRepository;
     private final ReservedStockRepository reservedStockRepository;

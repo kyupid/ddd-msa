@@ -1,6 +1,6 @@
 package com.kyupid.kshop.product.presentation;
 
-import com.kyupid.kshop.product.application.NotEnoughStockException;
+import com.kyupid.kshop.product.application.stock.NotEnoughStockException;
 import com.kyupid.kshop.product.application.ProductIdList;
 import com.kyupid.kshop.product.presentation.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;

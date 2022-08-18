@@ -1,14 +1,16 @@
 package com.kyupid.kshop.order.infra;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderProductInternalReqRes {
-    private List<StockAdjustment> stockAdjustmentList;
+    private final List<StockAdjustment> stockAdjustmentList;
+    private final List<Long> reservedStockIdList;
+
+    public OrderProductInternalReqRes(List<StockAdjustment> stockAdjustmentList) {
+        this.stockAdjustmentList = stockAdjustmentList;
+        this.reservedStockIdList = null;
+    }
 }
