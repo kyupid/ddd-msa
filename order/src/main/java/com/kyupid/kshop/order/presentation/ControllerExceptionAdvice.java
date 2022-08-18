@@ -39,6 +39,6 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(GeneralNotFoundException.class)
     public ExceptionMessageResponse handleGeneralNotFoundException() { // TODO: 어떤 품목이없는지 리스트로 보내야함
-        return new ExceptionMessageResponse("GeneralNotFoundException");
+        return new ExceptionMessageResponse("TODO: 어떤 품목이 없는지 리스트를 반환해야한다.");
     }
 }
