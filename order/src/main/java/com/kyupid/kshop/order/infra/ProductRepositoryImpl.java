@@ -17,7 +17,7 @@ public class ProductRepositoryImpl implements ProductRepository {
      * @return 해당 quantity만큼의 price를 return한다
      */
     @Override
-    public OrderProductInternalReqRes getProductPrice(OrderProductInternalReqRes request) {
+    public OrderProductInternalReqRes reserveStock(OrderProductInternalReqRes request) {
         String URI = "/api/products/stock";
         return RestClient.process(request, REQUEST_URL + URI);
     }

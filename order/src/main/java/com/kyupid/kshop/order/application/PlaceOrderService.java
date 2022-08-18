@@ -26,7 +26,7 @@ public class PlaceOrderService {
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         // TODO: price 가져온걸로 order만들기
-        OrderProductInternalReqRes op = productRepository.getProductPrice(new OrderProductInternalReqRes(orderRequest.getOrderProductList()));
+        OrderProductInternalReqRes op = productRepository.reserveStock(new OrderProductInternalReqRes(orderRequest.getOrderProductList()));
 
         Order order = Order.builder() // 이걸 orderproduct에 넣는다
                 .ordererMemberId(orderRequest.getOrdererMemberId())
@@ -52,9 +52,6 @@ public class PlaceOrderService {
         // TODO 세이브 완료되면 commit API back 하기
         orderRepository.save(order);
         return order;
-
-//        System.out.println("placeOrder 끝");
-//        return null;
     }
 
     private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {
