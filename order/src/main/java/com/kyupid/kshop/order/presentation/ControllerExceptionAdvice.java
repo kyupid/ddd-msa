@@ -2,6 +2,7 @@ package com.kyupid.kshop.order.presentation;
 
 import com.kyupid.kshop.order.application.ValidationError;
 import com.kyupid.kshop.order.application.ValidationErrorException;
+import com.kyupid.kshop.order.auth.JwtException;
 import com.kyupid.kshop.order.infra.ExternalApiServerException;
 import com.kyupid.kshop.order.presentation.dto.ExceptionResponse;
 import com.kyupid.kshop.order.presentation.exception.NoTokenException;
@@ -35,5 +36,11 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(ExternalApiServerException.class)
     public ResponseEntity<Object> handleExternalApiServerException(ExternalApiServerException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getResult().toMap());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(JwtException.class)
+    public ExceptionResponse handleExternalApiServerException(JwtException e) {
+        return new ExceptionResponse(e.getMessage());
     }
 }

@@ -1,7 +1,9 @@
 package com.kyupid.kshop.order.auth;
 
+import com.kyupid.kshop.order.presentation.dto.ExceptionResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,11 +18,15 @@ public class JwtAuth {
     private final JwtKey key;
 
     public Claims decode(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key.keyEncrypted())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key.keyEncrypted())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (MalformedJwtException e) {
+            throw new JwtException("JWT 위조");
+        }
     }
     public Long getMemberId(){
         // 스레드에 바인딩된 Request를 들고와서,
