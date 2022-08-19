@@ -24,7 +24,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Order getOrder(Long memberId, Long orderId) {
         return orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
-                .orElseThrow(() -> new NoSuchElementException(orderId.toString()));
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
     }
 
     @Transactional

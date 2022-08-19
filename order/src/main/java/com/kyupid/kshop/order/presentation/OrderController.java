@@ -41,9 +41,12 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public String getOrder(@PathVariable Long orderId) {
-        orderService.getOrder(TEMP_MEMBER_ID, orderId);
-        return null;
+    public OrderResponse getOrder(@PathVariable Long orderId) {
+        Order order = orderService.getOrder(jwtAuth.getMemberId(), orderId);
+        List<OrderProductResponse> oprList = order.getOrderProductList().stream()
+                .map(OrderProductResponse::from)
+                .collect(Collectors.toList());
+        return new OrderResponse(oprList, order.getOrdererMemberId(), order.getDeliveryInfo());
     }
 
     @PostMapping
