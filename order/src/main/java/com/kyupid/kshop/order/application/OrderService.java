@@ -25,9 +25,9 @@ public class OrderService {
     public Order getOrder(Long memberId, Long orderId) {
         Order order = orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
-        if (!(order.getOrdererMemberId().equals(memberId))) {
-            throw new OrderWrongAccessException();
-        }
+//        if (!(order.getOrdererMemberId().equals(memberId))) {
+//            throw new OrderWrongAccessException();
+//        } // 앞에서 이미 걸러짐
         return order;
     }
 
