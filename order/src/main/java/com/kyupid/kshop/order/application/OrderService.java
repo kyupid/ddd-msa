@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -28,8 +27,7 @@ public class OrderService {
                 .orElseThrow(() -> new NoSuchElementException(orderId.toString()));
     }
 
-
-
+    @Transactional
     public Order changeOrder(OrderRequest orderRequest, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
         return order;

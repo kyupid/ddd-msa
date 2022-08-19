@@ -10,6 +10,7 @@ import com.kyupid.kshop.order.presentation.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,17 @@ public class OrderController {
     private final JwtAuth jwtAuth;
 
     @GetMapping
-    public List<Order> getOrders() { // TODO: DTO로 변환
-        return orderService.getOrders(jwtAuth.getMemberId());
+    public List<OrderResponse> getOrders() {
+        Long memberId = jwtAuth.getMemberId();
+        List<Order> orders = orderService.getOrders(memberId);
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+        for (Order order : orders) {
+            List<OrderProductResponse> opr = order.getOrderProductList().stream()
+                    .map(OrderProductResponse::from)
+                    .collect(Collectors.toList());
+            orderResponseList.add(new OrderResponse(opr, memberId, order.getDeliveryInfo()));
+        }
+        return orderResponseList;
     }
 
     @GetMapping("/{orderId}")
