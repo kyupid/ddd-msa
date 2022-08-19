@@ -22,8 +22,8 @@ public class ControllerExceptionAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoTokenException.class)
-    public ExceptionResponse<String> handleTokenNotFound() {
-        return new ExceptionResponse<>("인증된 사용자가 아닙니다.");
+    public ExceptionResponse handleTokenNotFound() {
+        return new ExceptionResponse("인증된 사용자가 아닙니다.");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

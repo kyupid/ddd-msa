@@ -1,20 +1,14 @@
 package com.kyupid.kshop.order.presentation.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 @Getter
-public class ExceptionResponse<T> {
+public class ExceptionResponse {
 
-    private final T data;
     private final String message;
 
     public ExceptionResponse(String message) {
-        this.data = null;
-        this.message = message;
-    }
-
-    public ExceptionResponse(T data, String message) {
-        this.data = data;
         this.message = message;
     }
 }

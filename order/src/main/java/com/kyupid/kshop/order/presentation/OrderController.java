@@ -2,13 +2,14 @@ package com.kyupid.kshop.order.presentation;
 
 import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
+import com.kyupid.kshop.order.auth.JwtAuth;
+import com.kyupid.kshop.order.domain.Order;
 import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +23,11 @@ public class OrderController {
     private final PlaceOrderService placeOrderService;
     private final Long TEMP_MEMBER_ID = 1L;
 
+    private final JwtAuth jwtAuth;
+
     @GetMapping
-    public String getOrders(HttpServletRequest request) {
-        orderService.getOrders(TEMP_MEMBER_ID);
-        return null;
+    public List<Order> getOrders() { // TODO: DTO로 변환
+        return orderService.getOrders(jwtAuth.getMemberId());
     }
 
     @GetMapping("/{orderId}")
