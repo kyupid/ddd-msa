@@ -23,15 +23,18 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public Order getOrder(Long memberId, Long orderId) {
-        return orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
+        Order order = orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
-    }
-
-    @Transactional
-    public Order changeOrder(OrderRequest orderRequest, Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
+        if (!(order.getOrdererMemberId().equals(memberId))) {
+            throw new OrderWrongAccessException();
+        }
         return order;
     }
 
+    @Transactional // 미구현
+    public Order changeOrder(OrderRequest orderRequest, Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
+        return null;
+    }
 
 }

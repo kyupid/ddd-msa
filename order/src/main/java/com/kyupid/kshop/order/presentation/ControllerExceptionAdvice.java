@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.presentation;
 
 import com.kyupid.kshop.order.application.OrderNotFoundException;
+import com.kyupid.kshop.order.application.OrderWrongAccessException;
 import com.kyupid.kshop.order.application.ValidationError;
 import com.kyupid.kshop.order.application.ValidationErrorException;
 import com.kyupid.kshop.order.auth.JwtException;
@@ -49,5 +50,11 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(OrderNotFoundException.class)
     public ExceptionResponse handleOrderNotFoundException(OrderNotFoundException e) {
         return new ExceptionResponse("요청하신 주문은 없는 주문번호입니다. 주문번호: " + e.getOrderId());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OrderWrongAccessException.class)
+    public ExceptionResponse handleOrderWrongAccessException() {
+        return new ExceptionResponse("비정상적 접근: 본인이 주문한 내역만 확인이 가능합니다.");
     }
 }
