@@ -32,6 +32,9 @@ public class Order {
 
     private LocalDateTime orderDate;
 
+    @Version
+    private Integer version;
+
     @Builder
     public Order(OrderStatus orderStatus, Long ordererMemberId, DeliveryInfo deliveryInfo) {
         this.orderStatus = orderStatus;
