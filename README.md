@@ -29,6 +29,8 @@
     - domain (도메인 영역) - 핵심 로직
     - infra (인프라스트럭쳐 영역) - 실제 구현
 
+레퍼런스: [DDD 시작하기 by 최범균님](http://www.yes24.com/Product/Goods/108431347)
+[분산 트랜잭션 구현 by 유영모님](https://www.popit.kr/rest-%EA%B8%B0%EB%B0%98%EC%9D%98-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B6%84%EC%82%B0-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B5%AC%ED%98%84-1%ED%8E%B8/)
 ### 시현
 #### member
 - 로그인
