@@ -17,19 +17,17 @@ public class JwtAuthService {
      */
     public LoginResponseData login(LoginRequestData requestData) {
 
-//        Member member = memberRepository.findById(requestData.getEmail())
-//                .orElseThrow(() -> new RuntimeException("no id"));
+        Member member = memberRepository.findByEmail(requestData.getEmail())
+                .orElseThrow(() -> new RuntimeException("no id"));
 
-        // 아래 helloMember 로 로그인 시도한다고 가정
-        Member helloMember = new Member(1L, "hello@world.com", "1234");
 
-        boolean hasSamePassword = helloMember.hasSamePassword(requestData.getPassword());
+        boolean hasSamePassword = member.hasSamePassword(requestData.getPassword());
 
         if (!hasSamePassword) {
             throw new RuntimeException("wrong password");
         }
 
-        String jwt = jwtAuth.encode(helloMember.getMemberId());
+        String jwt = jwtAuth.encode(member.getMemberId());
 
         return new LoginResponseData(jwt);
     }
