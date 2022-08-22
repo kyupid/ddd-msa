@@ -3,4 +3,5 @@ include 'product'
 include 'order'
 include 'member'
 include 'eureka'
+include 'loadbalancer'
 

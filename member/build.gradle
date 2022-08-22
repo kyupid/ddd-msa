@@ -34,6 +34,7 @@ dependencies {
 // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20220320'
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 }
 
 test {
@@ -42,4 +43,13 @@ test {
 
 bootJar {
     enabled = false
+}
+
+ext {
+    set('springCloudVersion', "2021.0.3")
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
