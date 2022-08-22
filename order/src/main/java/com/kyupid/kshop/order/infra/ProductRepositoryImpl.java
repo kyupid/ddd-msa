@@ -1,13 +1,15 @@
 package com.kyupid.kshop.order.infra;
 
 import com.kyupid.kshop.order.domain.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
-    private static final String REQUEST_URL = "http://localhost:8080";
 
+    private final RestClient restClient;
     /**
      * Stock 을 Reserve 한다.
      *
@@ -27,7 +29,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public OrderProductInternalReqRes reserveStock(OrderProductInternalReqRes request) {
         final String URI = "/api/products/reserve/stock";
-        return RestClient.postExchange(request, REQUEST_URL + URI, new ParameterizedTypeReference<OrderProductInternalReqRes>() {});
+        return restClient.postExchange(request, URI, new ParameterizedTypeReference<OrderProductInternalReqRes>() {});
     }
 
     /**
@@ -40,6 +42,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void confirmStock(ConfirmStockRequest confirmStockRequest) {
         final String URI = "/api/products/confirm/stock";
-        RestClient.putExchange(confirmStockRequest, REQUEST_URL + URI, new ParameterizedTypeReference<Void>() {});
+        restClient.putExchange(confirmStockRequest, URI, new ParameterizedTypeReference<Void>() {});
     }
 }
