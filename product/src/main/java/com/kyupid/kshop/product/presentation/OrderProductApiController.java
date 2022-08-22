@@ -23,7 +23,7 @@ public class OrderProductApiController {
     }
 
     @PutMapping("/confirm/stock")
-    public void reserveStock(@RequestBody ConfirmStockRequest request) {
+    public void confirmStock(@RequestBody ConfirmStockRequest request) {
         confirmStockService.confirmStock(request);
     }
 }
