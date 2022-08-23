@@ -45,6 +45,10 @@ public class Product {
         this.stock -= requestQuantity;
     }
 
+    public void increaseStock(Integer requestQuantity) {
+        this.stock += requestQuantity;
+    }
+
     public boolean hasAvailableStock(Integer requestQuantity) {
         return stock >= requestQuantity;
     }

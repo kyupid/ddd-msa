@@ -36,7 +36,7 @@ public class StockService {
                 unavailableStockList.add(product.getId());
             }
 
-            stockAdjustment.setPricePerProduct(product.getPrice());
+            stockAdjustment.setPricePerProduct(product.getPrice()); // OrderProduct 주문가격정보를 위한 setter
         }
         processStockValidation(unavailableStockList);
 
@@ -47,6 +47,14 @@ public class StockService {
     private void processStockValidation(List<Long> unavailableStockList) {
         if (unavailableStockList.size() > 0) {
             throw new NotEnoughStockException(unavailableStockList);
+        }
+    }
+
+    public void increaseStock(List<StockAdjustment> saList) {
+        for (StockAdjustment sa : saList) {
+            Product product = productRepository.findById(sa.getProductId())
+                    .orElseThrow(() -> new ProductNotFoundException(sa.getProductId()));
+            product.increaseStock(sa.getQuantity());
         }
     }
 }
