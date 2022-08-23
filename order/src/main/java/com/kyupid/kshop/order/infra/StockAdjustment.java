@@ -2,8 +2,10 @@ package com.kyupid.kshop.order.infra;
 
 import com.kyupid.kshop.order.domain.OrderProduct;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class StockAdjustment {
     private Long productId;
     private Integer quantity;
