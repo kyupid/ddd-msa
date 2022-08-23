@@ -31,10 +31,18 @@ public class OrderService {
         return order;
     }
 
-    @Transactional // 미구현
+    @Transactional
     public Order changeOrder(OrderRequest orderRequest, Long orderId) {
+        List<ValidationError> errors = validateOrderRequest(orderRequest);
+        if (!errors.isEmpty()) throw new ValidationErrorException(errors);
+
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
+        order.changeAllInfo(orderRequest);
+
         return null;
     }
 
+    private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {
+        return new OrderRequestValidator().validate(orderRequest);
+    }
 }

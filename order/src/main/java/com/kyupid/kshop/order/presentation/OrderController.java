@@ -61,6 +61,14 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public String changeOrder(@RequestBody OrderRequest orderRequest,
                               @PathVariable Long orderId) {
+        orderRequest.setOrdererId(jwtAuth.getMemberId());
+        orderService.changeOrder(orderRequest, orderId);
+        return null;
+    }
+
+    @DeleteMapping("/{orderId}")
+    public String cancelOrder(@RequestBody OrderRequest orderRequest,
+                              @PathVariable Long orderId) {
         orderRequest.setOrdererId(TEMP_MEMBER_ID);
         // TODO: @RequestBody에  OrderStatus를 받아야하는가?
         // 운영자면 받아야하고 일반유저면 안받아야하고

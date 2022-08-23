@@ -1,5 +1,6 @@
 package com.kyupid.kshop.order.domain;
 
+import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,5 +42,24 @@ public class Order {
         this.ordererMemberId = ordererMemberId;
         this.deliveryInfo = deliveryInfo;
         this.orderDate = LocalDateTime.now();
+    }
+
+    public void changeAllInfo(OrderRequest orderRequest) {
+        verifyNotYetShipped();
+        setDeliveryInfo(orderRequest.getDeliveryInfo());
+    }
+
+    private void setDeliveryInfo(DeliveryInfo deliveryInfo) {
+
+    }
+
+    private void verifyNotYetShipped() {
+        if (!isNotYetShipped()) {
+            throw new AlreadyShippedException();
+        }
+    }
+
+    public boolean isNotYetShipped() {
+        return orderStatus == OrderStatus.PAYMENT_WAITING || orderStatus == OrderStatus.PREPARING;
     }
 }
