@@ -15,12 +15,12 @@ public class OrderProductApiController {
 
     private final StockService stockService;
 
-    @PatchMapping("/decrease/stock")
+    @PostMapping("/decrease/stock")
     public OrderProductReqRes decreaseStock(@RequestBody OrderProductReqRes request) {
         return stockService.decreaseStock(request);
     }
 
-    @PatchMapping("/increase/stock")
+    @PostMapping("/increase/stock")
     public void increaseStock(@RequestBody List<StockAdjustment> saList) {
         stockService.increaseStock(saList);
     }

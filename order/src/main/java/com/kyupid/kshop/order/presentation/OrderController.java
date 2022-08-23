@@ -22,7 +22,6 @@ public class OrderController {
 
     private final OrderService orderService;
     private final PlaceOrderService placeOrderService;
-    private final Long TEMP_MEMBER_ID = 1L;
 
     private final JwtAuth jwtAuth;
 
@@ -71,12 +70,9 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
-    public String cancelOrder(@PathVariable Long orderId) {
+    public void cancelOrder(@PathVariable Long orderId) {
         Long memberId = jwtAuth.getMemberId();
         orderService.cancelOrder(orderId, memberId);
-
-
-        return null;
     }
 
 }
