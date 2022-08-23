@@ -50,7 +50,7 @@ public class Order {
     }
 
     private void setDeliveryInfo(DeliveryInfo deliveryInfo) {
-
+        this.deliveryInfo = deliveryInfo;
     }
 
     private void verifyNotYetShipped() {
