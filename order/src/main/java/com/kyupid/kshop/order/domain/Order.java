@@ -44,9 +44,9 @@ public class Order {
         this.orderDate = LocalDateTime.now();
     }
 
-    public void changeDeliveryInfo(OrderRequest orderRequest) {
+    public void changeDeliveryInfo(DeliveryInfo deliveryInfo) {
         verifyNotYetShipped();
-        setDeliveryInfo(orderRequest.getDeliveryInfo());
+        setDeliveryInfo(deliveryInfo);
     }
 
     private void setDeliveryInfo(DeliveryInfo deliveryInfo) {
@@ -61,5 +61,10 @@ public class Order {
 
     public boolean isNotYetShipped() {
         return orderStatus == OrderStatus.PAYMENT_WAITING || orderStatus == OrderStatus.PREPARING;
+    }
+
+    public void cancel() {
+        verifyNotYetShipped();
+        this.orderStatus = OrderStatus.CANCELED;
     }
 }

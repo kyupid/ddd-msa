@@ -40,14 +40,4 @@ public class OrderProduct { //연관관계 주인
     private Integer calculatePrice(Integer pricePerProduct) {
         return orderQuantity * pricePerProduct;
     }
-
-    public void updateOrderProductInfo(StockAdjustment sa) {
-        this.price = sa.getPricePerProduct();
-        if (sa.getAdjustmentType() == AdjustmentType.INCREASE) {
-            this.orderQuantity += sa.getQuantity();
-        } else if (sa.getAdjustmentType() == AdjustmentType.DECREASE) {
-            this.orderQuantity -= sa.getQuantity();
-        }
-        this.totalAmounts = price * orderQuantity;
-    }
 }

@@ -2,22 +2,20 @@ package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.domain.*;
 import com.kyupid.kshop.order.infra.StockAdjustment;
-import com.kyupid.kshop.order.presentation.dto.ChangeOrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
 
     @Transactional(readOnly = true)
@@ -32,36 +30,51 @@ public class OrderService {
         return order;
     }
 
-    /**
-     * 수량, 배송 둘다 변경한다고 가정 TODO: 나누기
-     */
     @Transactional
-    public Order changeOrder(ChangeOrderRequest orderRequest, Long orderId) {
+    public Order changeDeliveryInfo(OrderRequest orderRequest, Long orderId) {
         List<ValidationError> errors = validateOrderRequest(orderRequest);
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
-
-        // 1. 배송정보 변경
-        order.changeDeliveryInfo(orderRequest);
-
-        // 2. Product stock 변경
-        productRepository.changeStock(orderRequest);
-
-        // 3. Procut stock 변경 후, OrderProduct 변경 (주문 수량, 가격)
-        List<OrderProduct> opList = order.getOrderProductList();
-        List<StockAdjustment> saList = orderRequest.getStockAdjustmentList();
-        for (OrderProduct op : opList) {
-            for (StockAdjustment sa : saList) {
-                if (op.getProductId().equals(sa.getProductId())) {
-                    op.updateOrderProductInfo(sa);
-                }
-            }
-        }
+        order.changeDeliveryInfo(orderRequest.getDeliveryInfo());
         return order;
     }
 
-    private List<ValidationError> validateOrderRequest(ChangeOrderRequest orderRequest) {
+    private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {
         return new OrderRequestValidator().validate(orderRequest);
+    }
+
+    @Transactional
+    public void cancelOrder(Long orderId, Long memberId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        if (!hasCancellationPermission(orderId, memberId)) {
+            throw new NoCancellationPermissionException();
+        }
+        increaseStock(order);
+        order.cancel();
+    }
+
+    private void increaseStock(Order order) {
+        List<OrderProduct> opList = order.getOrderProductList();
+        List<StockAdjustment> saList = opList.stream()
+                .map(StockAdjustment::from)
+                .collect(Collectors.toList());
+        productRepository.increaseStock(saList);
+    }
+
+    public boolean hasCancellationPermission(Long orderId, Long memberId) {
+        return isCancellerOrderer(orderId, memberId) || isCurrentUserAdminRole();
+    }
+
+    private boolean isCancellerOrderer(Long orderId, Long memberId) {
+        return orderId.equals(memberId);
+    }
+
+    private boolean isCurrentUserAdminRole() {
+        /**
+         * 현재 유저가 어드민인지 체크하는 로직을 삽입
+         */
+        return true;
     }
 }

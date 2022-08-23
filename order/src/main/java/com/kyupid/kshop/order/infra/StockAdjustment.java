@@ -1,6 +1,6 @@
 package com.kyupid.kshop.order.infra;
 
-import com.kyupid.kshop.order.presentation.dto.AdjustmentType;
+import com.kyupid.kshop.order.domain.OrderProduct;
 import lombok.Getter;
 
 @Getter
@@ -8,5 +8,14 @@ public class StockAdjustment {
     private Long productId;
     private Integer quantity;
     private Integer pricePerProduct;
-    private AdjustmentType adjustmentType;
+
+    public StockAdjustment(Long productId, Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.pricePerProduct = null;
+    }
+
+    public static StockAdjustment from(OrderProduct op) {
+        return new StockAdjustment(op.getProductId(), op.getOrderQuantity());
+    }
 }

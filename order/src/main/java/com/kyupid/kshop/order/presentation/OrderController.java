@@ -4,7 +4,6 @@ import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
 import com.kyupid.kshop.order.auth.JwtAuth;
 import com.kyupid.kshop.order.domain.Order;
-import com.kyupid.kshop.order.presentation.dto.ChangeOrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderResponse;
@@ -59,11 +58,11 @@ public class OrderController {
         return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), orderRequest.getDeliveryInfo());
     }
 
-    @PutMapping("/{orderId}")
-    public OrderResponse changeOrder(@RequestBody ChangeOrderRequest orderRequest,
-                              @PathVariable Long orderId) {
+    @PatchMapping("/{orderId}")
+    public OrderResponse changeDeliveryInfo(@RequestBody OrderRequest orderRequest,
+                                            @PathVariable Long orderId) {
         orderRequest.setOrdererId(jwtAuth.getMemberId());
-        Order order = orderService.changeOrder(orderRequest, orderId);
+        Order order = orderService.changeDeliveryInfo(orderRequest, orderId);
 
         List<OrderProductResponse> oprList = order.getOrderProductList().stream()
                 .map(OrderProductResponse::from)
@@ -72,13 +71,11 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
-    public String cancelOrder(@RequestBody OrderRequest orderRequest,
-                              @PathVariable Long orderId) {
-        orderRequest.setOrdererId(TEMP_MEMBER_ID);
-        // TODO: @RequestBody에  OrderStatus를 받아야하는가?
-        // 운영자면 받아야하고 일반유저면 안받아야하고
+    public String cancelOrder(@PathVariable Long orderId) {
+        Long memberId = jwtAuth.getMemberId();
+        orderService.cancelOrder(orderId, memberId);
 
-        // 상품 수량 변경 -> product api
+
         return null;
     }
 
