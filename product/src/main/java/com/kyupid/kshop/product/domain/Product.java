@@ -41,7 +41,11 @@ public class Product {
         this.price = changingProduct.getPrice();
     }
 
-    public void commitStockSubtraction(Integer reservedQuantity) {
-        this.stock -= reservedQuantity;
+    public void decreaseStock(Integer requestQuantity) {
+        this.stock -= requestQuantity;
+    }
+
+    public boolean hasAvailableStock(Integer requestQuantity) {
+        return stock >= requestQuantity;
     }
 }
