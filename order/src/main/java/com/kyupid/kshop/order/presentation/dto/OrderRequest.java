@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.presentation.dto;
 
 import com.kyupid.kshop.order.domain.DeliveryInfo;
+import com.kyupid.kshop.order.domain.OrderStatus;
 import com.kyupid.kshop.order.infra.StockAdjustment;
 import lombok.Getter;
 

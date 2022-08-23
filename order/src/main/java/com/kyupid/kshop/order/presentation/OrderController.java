@@ -51,7 +51,7 @@ public class OrderController {
 
     @PostMapping
     public OrderResponse orderProduct(@RequestBody OrderRequest orderRequest) {
-        orderRequest.setOrdererId(TEMP_MEMBER_ID);
+        orderRequest.setOrdererId(jwtAuth.getMemberId());
         List<OrderProductResponse> oprList = placeOrderService.placeOrder(orderRequest).stream()
                 .map(OrderProductResponse::from)
                 .collect(Collectors.toList());
