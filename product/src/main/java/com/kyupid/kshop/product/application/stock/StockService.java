@@ -50,7 +50,9 @@ public class StockService {
         }
     }
 
+    @Transactional
     public void increaseStock(List<StockAdjustment> saList) {
+        log.info("saList: {}", saList);
         for (StockAdjustment sa : saList) {
             Product product = productRepository.findById(sa.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException(sa.getProductId()));

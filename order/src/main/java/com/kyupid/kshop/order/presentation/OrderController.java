@@ -58,10 +58,10 @@ public class OrderController {
     }
 
     @PatchMapping("/{orderId}")
-    public OrderResponse changeDeliveryInfo(@RequestBody OrderRequest orderRequest,
+    public OrderResponse changeDeliveryInfo(@RequestBody ChangeDeliveryRequest request,
                                             @PathVariable Long orderId) {
-        orderRequest.setOrdererId(jwtAuth.getMemberId());
-        Order order = orderService.changeDeliveryInfo(orderRequest, orderId);
+        request.setOrdererId(jwtAuth.getMemberId());
+        Order order = orderService.changeDeliveryInfo(request, orderId);
 
         List<OrderProductResponse> oprList = order.getOrderProductList().stream()
                 .map(OrderProductResponse::from)

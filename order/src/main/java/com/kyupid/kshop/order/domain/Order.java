@@ -49,6 +49,12 @@ public class Order {
         setDeliveryInfo(deliveryInfo);
     }
 
+    private void verifyNotAlreadyCanceled() {
+        if(orderStatus == OrderStatus.CANCELED){
+            throw new AlreadyCanceledException();
+        }
+    }
+
     private void setDeliveryInfo(DeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
     }
@@ -64,6 +70,7 @@ public class Order {
     }
 
     public void cancel() {
+        verifyNotAlreadyCanceled();
         verifyNotYetShipped();
         this.orderStatus = OrderStatus.CANCELED;
     }

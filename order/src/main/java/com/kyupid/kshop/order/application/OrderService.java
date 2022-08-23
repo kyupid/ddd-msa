@@ -2,6 +2,7 @@ package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.domain.*;
 import com.kyupid.kshop.order.infra.StockAdjustment;
+import com.kyupid.kshop.order.presentation.ChangeDeliveryRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,17 +32,17 @@ public class OrderService {
     }
 
     @Transactional
-    public Order changeDeliveryInfo(OrderRequest orderRequest, Long orderId) {
-        List<ValidationError> errors = validateOrderRequest(orderRequest);
+    public Order changeDeliveryInfo(ChangeDeliveryRequest request, Long orderId) {
+        List<ValidationError> errors = validateOrderRequest(request);
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
-        order.changeDeliveryInfo(orderRequest.getDeliveryInfo());
+        order.changeDeliveryInfo(request.getDeliveryInfo());
         return order;
     }
 
-    private List<ValidationError> validateOrderRequest(OrderRequest orderRequest) {
-        return new OrderRequestValidator().validate(orderRequest);
+    private List<ValidationError> validateOrderRequest(ChangeDeliveryRequest request) {
+        return new OrderRequestValidator().validate(request);
     }
 
     @Transactional

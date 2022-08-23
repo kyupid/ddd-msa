@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.infra.StockAdjustment;
+import com.kyupid.kshop.order.presentation.ChangeDeliveryRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 
 import java.util.ArrayList;
@@ -46,6 +47,25 @@ public class OrderRequestValidator {
                 if (orderRequest.getDeliveryInfo().getAddress() == null)
                     errors.add(ValidationError.of("deliveryInfo.address", PROPERTY_REQUIRED));
                 if (orderRequest.getDeliveryInfo().getPhone() == null)
+                    errors.add(ValidationError.of("deliveryInfo.phone", PROPERTY_REQUIRED));
+            }
+        }
+        return errors;
+    }
+
+    public List<ValidationError> validate(ChangeDeliveryRequest request) {
+        List<ValidationError> errors = new ArrayList<>();
+        if (request == null) {
+            errors.add(ValidationError.of(PROPERTY_REQUIRED));
+        } else {
+            if (request.getDeliveryInfo() == null) {
+                errors.add(ValidationError.of("deliveryInfo", PROPERTY_REQUIRED));
+            } else {
+                if (request.getDeliveryInfo().getReceiverName() == null)
+                    errors.add(ValidationError.of("deliveryInfo.receiver", PROPERTY_REQUIRED));
+                if (request.getDeliveryInfo().getAddress() == null)
+                    errors.add(ValidationError.of("deliveryInfo.address", PROPERTY_REQUIRED));
+                if (request.getDeliveryInfo().getPhone() == null)
                     errors.add(ValidationError.of("deliveryInfo.phone", PROPERTY_REQUIRED));
             }
         }
