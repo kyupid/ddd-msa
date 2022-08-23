@@ -40,7 +40,6 @@ public class StockService {
         }
         processStockValidation(unavailableStockList);
 
-        // TODO 3. price 담긴거 리턴
         return new OrderProductReqRes(saList);
     }
 

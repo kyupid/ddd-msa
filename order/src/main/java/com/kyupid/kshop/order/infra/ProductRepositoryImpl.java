@@ -14,6 +14,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public OrderProductReqRes decreaseStock(OrderProductReqRes request) {
         final String URI = "/api/products/stock";
-        return restClient.postExchange(request, URI, new ParameterizedTypeReference<OrderProductReqRes>() {});
+        return restClient.patchExchange(request, URI, new ParameterizedTypeReference<OrderProductReqRes>() {});
     }
 }

@@ -25,12 +25,12 @@ public class RestClient {
     /**
      * Generic 활용해서 재활용성 높이기
      */
-    protected <T, S> S postExchange(T body, String requestURI, ParameterizedTypeReference<S> responseType) {
+    protected <T, S> S patchExchange(T body, String requestURI, ParameterizedTypeReference<S> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-API-KEY", API_KEY);
 
         HttpEntity<T> entity = new HttpEntity<>(body, headers);
-        ResponseEntity<S> response = restTemplate.exchange(REQUEST_URL + requestURI, HttpMethod.POST, entity, responseType);
+        ResponseEntity<S> response = restTemplate.exchange(REQUEST_URL + requestURI, HttpMethod.PATCH, entity, responseType);
         log.info("response postExchange: " + response);
         return response.getBody();
     }
