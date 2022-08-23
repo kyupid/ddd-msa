@@ -1,6 +1,8 @@
 package com.kyupid.kshop.order.domain;
 
 
+import com.kyupid.kshop.order.infra.StockAdjustment;
+import com.kyupid.kshop.order.presentation.dto.AdjustmentType;
 import lombok.*;
 
 import javax.persistence.*;

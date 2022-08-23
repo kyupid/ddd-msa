@@ -1,9 +1,8 @@
 package com.kyupid.kshop.product.presentation;
 
-import com.kyupid.kshop.product.application.stock.ConfirmStockService;
-import com.kyupid.kshop.product.application.stock.ReserveStockService;
-import com.kyupid.kshop.product.presentation.dto.ConfirmStockRequest;
-import com.kyupid.kshop.product.presentation.dto.OrderProductInternalReqRes;
+import com.kyupid.kshop.product.application.stock.StockService;
+import com.kyupid.kshop.product.presentation.dto.OrderProductReqRes;
+import com.kyupid.kshop.product.presentation.dto.StockAdjustment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +13,15 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class OrderProductApiController {
 
-    private final ReserveStockService reserveStockService;
-    private final ConfirmStockService confirmStockService;
+    private final StockService stockService;
 
-    @PostMapping("/reserve/stock")
-    public OrderProductInternalReqRes reserveStock(@RequestBody OrderProductInternalReqRes request) {
-        return reserveStockService.reserveStock(request);
+    @PostMapping("/decrease/stock")
+    public OrderProductReqRes decreaseStock(@RequestBody OrderProductReqRes request) {
+        return stockService.decreaseStock(request);
     }
 
-    @PutMapping("/confirm/stock")
-    public void confirmStock(@RequestBody ConfirmStockRequest request) {
-        confirmStockService.confirmStock(request);
+    @PostMapping("/increase/stock")
+    public void increaseStock(@RequestBody List<StockAdjustment> saList) {
+        stockService.increaseStock(saList);
     }
 }

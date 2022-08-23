@@ -22,7 +22,6 @@ public class OrderController {
 
     private final OrderService orderService;
     private final PlaceOrderService placeOrderService;
-    private final Long TEMP_MEMBER_ID = 1L;
 
     private final JwtAuth jwtAuth;
 
@@ -51,23 +50,29 @@ public class OrderController {
 
     @PostMapping
     public OrderResponse orderProduct(@RequestBody OrderRequest orderRequest) {
-        orderRequest.setOrdererId(TEMP_MEMBER_ID);
+        orderRequest.setOrdererId(jwtAuth.getMemberId());
         List<OrderProductResponse> oprList = placeOrderService.placeOrder(orderRequest).stream()
                 .map(OrderProductResponse::from)
                 .collect(Collectors.toList());
         return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), orderRequest.getDeliveryInfo());
     }
 
-    @PutMapping("/{orderId}")
-    public String changeOrder(@RequestBody OrderRequest orderRequest,
-                              @PathVariable Long orderId) {
-        orderRequest.setOrdererId(TEMP_MEMBER_ID);
-        // TODO: @RequestBody에  OrderStatus를 받아야하는가?
-        // 운영자면 받아야하고 일반유저면 안받아야하고
+    @PatchMapping("/{orderId}")
+    public OrderResponse changeDeliveryInfo(@RequestBody ChangeDeliveryRequest request,
+                                            @PathVariable Long orderId) {
+        request.setOrdererId(jwtAuth.getMemberId());
+        Order order = orderService.changeDeliveryInfo(request, orderId);
 
-        orderService.changeOrder(orderRequest, orderId);
-        // 상품 수량 변경 -> product api
-        return null;
+        List<OrderProductResponse> oprList = order.getOrderProductList().stream()
+                .map(OrderProductResponse::from)
+                .collect(Collectors.toList());
+        return new OrderResponse(oprList, order.getOrdererMemberId(), order.getDeliveryInfo());
+    }
+
+    @DeleteMapping("/{orderId}")
+    public void cancelOrder(@PathVariable Long orderId) {
+        Long memberId = jwtAuth.getMemberId();
+        orderService.cancelOrder(orderId, memberId);
     }
 
 }

@@ -34,14 +34,4 @@ public class RestClient {
         log.info("response postExchange: " + response);
         return response.getBody();
     }
-
-    protected <T, S> S putExchange(T body, String requestURI, ParameterizedTypeReference<S> responseType) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-API-KEY", API_KEY);
-
-        HttpEntity<T> entity = new HttpEntity<>(body, headers);
-        ResponseEntity<S> response = restTemplate.exchange(REQUEST_URL + requestURI, HttpMethod.PUT, entity, responseType);
-        log.info("response putExchange: " + response);
-        return response.getBody();
-    }
 }

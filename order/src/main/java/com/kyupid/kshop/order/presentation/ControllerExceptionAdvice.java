@@ -5,6 +5,8 @@ import com.kyupid.kshop.order.application.OrderWrongAccessException;
 import com.kyupid.kshop.order.application.ValidationError;
 import com.kyupid.kshop.order.application.ValidationErrorException;
 import com.kyupid.kshop.order.auth.JwtException;
+import com.kyupid.kshop.order.domain.AlreadyCanceledException;
+import com.kyupid.kshop.order.domain.AlreadyShippedException;
 import com.kyupid.kshop.order.infra.ExternalApiServerException;
 import com.kyupid.kshop.order.presentation.dto.ExceptionResponse;
 import com.kyupid.kshop.order.presentation.exception.NoTokenException;
@@ -56,5 +58,17 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(OrderWrongAccessException.class)
     public ExceptionResponse handleOrderWrongAccessException() {
         return new ExceptionResponse("비정상적 접근: 본인이 주문한 내역만 확인이 가능합니다.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlreadyCanceledException.class)
+    public ExceptionResponse handleAlreadyCanceledException() {
+        return new ExceptionResponse("이미 취소된 주문입니다.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlreadyShippedException.class)
+    public ExceptionResponse handleAlreadyShippedException() {
+        return new ExceptionResponse("이미 배송된 주문입니다.");
     }
 }

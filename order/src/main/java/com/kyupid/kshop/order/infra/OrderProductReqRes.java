@@ -7,12 +7,10 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class OrderProductInternalReqRes {
+public class OrderProductReqRes {
     private List<StockAdjustment> stockAdjustmentList;
-    private List<Long> reservedStockIdList;
 
-    public OrderProductInternalReqRes(List<StockAdjustment> stockAdjustmentList) {
+    public OrderProductReqRes(List<StockAdjustment> stockAdjustmentList) {
         this.stockAdjustmentList = stockAdjustmentList;
-        this.reservedStockIdList = null;
     }
 }

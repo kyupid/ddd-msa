@@ -25,8 +25,8 @@ public class PlaceOrderService {
         List<ValidationError> errors = validateOrderRequest(orderRequest);
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
-        // 1. stock을 reserve 한다.
-        OrderProductInternalReqRes op = productRepository.reserveStock(new OrderProductInternalReqRes(orderRequest.getStockAdjustmentList()));
+        // 1. stock을 감소요청한다. Order -> Product
+        OrderProductReqRes op = productRepository.decreaseStock(new OrderProductReqRes(orderRequest.getStockAdjustmentList()));
 
         // 2. order 생성
         Order order = Order.builder()
@@ -50,8 +50,6 @@ public class PlaceOrderService {
         }
         orderProductRepository.saveAll(opList);
 
-        // 4. reserve 된 stock 을 confrim 한다
-        productRepository.confirmStock(new ConfirmStockRequest(op.getReservedStockIdList()));
         return opList;
     }
 

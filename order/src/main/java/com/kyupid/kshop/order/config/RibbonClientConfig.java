@@ -1,5 +1,7 @@
 package com.kyupid.kshop.order.config;
 
+import com.kyupid.kshop.order.infra.RestTemplateResponseErrorHandler;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +14,10 @@ public class RibbonClientConfig {
 
     @LoadBalanced
     @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate restTemplate() {
+        RestTemplateBuilder builder = new RestTemplateBuilder();
+        return builder
+                .errorHandler(new RestTemplateResponseErrorHandler())
+                .build();
     }
 }

@@ -1,10 +1,12 @@
 package com.kyupid.kshop.order.domain;
 
-import com.kyupid.kshop.order.infra.ConfirmStockRequest;
-import com.kyupid.kshop.order.infra.OrderProductInternalReqRes;
+import com.kyupid.kshop.order.infra.OrderProductReqRes;
+import com.kyupid.kshop.order.infra.StockAdjustment;
+
+import java.util.List;
 
 public interface ProductRepository {
-    OrderProductInternalReqRes reserveStock(OrderProductInternalReqRes request);
+    OrderProductReqRes decreaseStock(OrderProductReqRes request);
 
-    void confirmStock(ConfirmStockRequest confirmStockRequest);
+    void increaseStock(List<StockAdjustment> saList);
 }
