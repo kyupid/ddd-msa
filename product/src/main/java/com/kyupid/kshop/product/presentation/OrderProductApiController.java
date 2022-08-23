@@ -15,15 +15,9 @@ import java.util.List;
 public class OrderProductApiController {
 
     private final ReserveStockService reserveStockService;
-    private final ConfirmStockService confirmStockService;
 
-    @PostMapping("/reserve/stock")
-    public OrderProductInternalReqRes reserveStock(@RequestBody OrderProductInternalReqRes request) {
+    @PatchMapping("/stock")
+    public OrderProductInternalReqRes adjustStock(@RequestBody OrderProductInternalReqRes request) {
         return reserveStockService.reserveStock(request);
-    }
-
-    @PutMapping("/confirm/stock")
-    public void confirmStock(@RequestBody ConfirmStockRequest request) {
-        confirmStockService.confirmStock(request);
     }
 }
