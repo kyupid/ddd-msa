@@ -4,6 +4,7 @@ import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
 import com.kyupid.kshop.order.auth.JwtAuth;
 import com.kyupid.kshop.order.domain.Order;
+import com.kyupid.kshop.order.presentation.dto.ChangeOrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderResponse;
@@ -59,11 +60,15 @@ public class OrderController {
     }
 
     @PutMapping("/{orderId}")
-    public String changeOrder(@RequestBody OrderRequest orderRequest,
+    public OrderResponse changeOrder(@RequestBody ChangeOrderRequest orderRequest,
                               @PathVariable Long orderId) {
         orderRequest.setOrdererId(jwtAuth.getMemberId());
-        orderService.changeOrder(orderRequest, orderId);
-        return null;
+        Order order = orderService.changeOrder(orderRequest, orderId);
+
+        List<OrderProductResponse> oprList = order.getOrderProductList().stream()
+                .map(OrderProductResponse::from)
+                .collect(Collectors.toList());
+        return new OrderResponse(oprList, order.getOrdererMemberId(), order.getDeliveryInfo());
     }
 
     @DeleteMapping("/{orderId}")
@@ -73,7 +78,6 @@ public class OrderController {
         // TODO: @RequestBody에  OrderStatus를 받아야하는가?
         // 운영자면 받아야하고 일반유저면 안받아야하고
 
-        orderService.changeOrder(orderRequest, orderId);
         // 상품 수량 변경 -> product api
         return null;
     }

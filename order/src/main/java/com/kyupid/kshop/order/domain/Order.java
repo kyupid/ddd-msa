@@ -44,7 +44,7 @@ public class Order {
         this.orderDate = LocalDateTime.now();
     }
 
-    public void changeAllInfo(OrderRequest orderRequest) {
+    public void changeDeliveryInfo(OrderRequest orderRequest) {
         verifyNotYetShipped();
         setDeliveryInfo(orderRequest.getDeliveryInfo());
     }
