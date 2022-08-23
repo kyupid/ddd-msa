@@ -12,7 +12,7 @@ public class RibbonClientConfig {
 
     @LoadBalanced
     @Bean
-    RestTemplate restTemplate() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 }
