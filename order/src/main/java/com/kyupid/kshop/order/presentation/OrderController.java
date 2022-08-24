@@ -57,7 +57,7 @@ public class OrderController {
         return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), orderRequest.getDeliveryInfo());
     }
 
-    @PatchMapping("/{orderId}")
+    @PutMapping("/{orderId}")
     public OrderResponse changeDeliveryInfo(@RequestBody ChangeDeliveryRequest request,
                                             @PathVariable Long orderId) {
         request.setOrdererId(jwtAuth.getMemberId());
