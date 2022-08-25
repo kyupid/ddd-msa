@@ -38,3 +38,15 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+springdoc:
+  swagger-ui:
+    urls[0]:
+      name: product-service
+      url: http://localhost:${server.port}/v3/api-docs/product-service
+    urls[1]:
+      name: order-service
+      url: http://localhost:${server.port}/v3/api-docs/order-service
+    urls[2]:
+      name: member-service
+      url: http://localhost:${server.port}/v3/api-docs/member-service
