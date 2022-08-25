@@ -18,11 +18,17 @@ spring:
           uri: lb://MEMBER-SERVICE
           predicates:
             - Path=/member-service/**
+          filters:
+            - RewritePath=/member-service/(?<path>.*), /$\{path}
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
+          filters:
+            - RewritePath=/order-service/(?<path>.*), /$\{path}
         - id: product-service
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/product-service/**
+          filters:
+            - RewritePath=/product-service/(?<path>.*), /$\{path}
