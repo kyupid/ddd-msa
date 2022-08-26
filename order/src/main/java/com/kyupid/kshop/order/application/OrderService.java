@@ -1,6 +1,7 @@
 package com.kyupid.kshop.order.application;
 
 import com.kyupid.kshop.order.application.exception.NoCancellationPermissionException;
+import com.kyupid.kshop.order.application.exception.NoPermissionException;
 import com.kyupid.kshop.order.application.exception.OrderNotFoundException;
 import com.kyupid.kshop.order.application.exception.ValidationErrorException;
 import com.kyupid.kshop.order.domain.*;
@@ -38,6 +39,9 @@ public class OrderService {
         if (!errors.isEmpty()) throw new ValidationErrorException(errors);
 
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException(orderId.toString()));
+        if (!hasPermission(order.getOrdererMemberId(), request.getOrdererId())) {
+            throw new NoPermissionException();
+        }
         order.changeDeliveryInfo(request.getDeliveryInfo());
         return order;
     }
@@ -50,7 +54,7 @@ public class OrderService {
     public void cancelOrder(Long orderId, Long memberId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
-        if (!hasCancellationPermission(orderId, memberId)) {
+        if (!hasPermission(order.getOrdererMemberId(), memberId)) {
             throw new NoCancellationPermissionException();
         }
         order.cancel();
@@ -65,11 +69,11 @@ public class OrderService {
         productRepository.increaseStock(saList);
     }
 
-    public boolean hasCancellationPermission(Long orderId, Long memberId) {
-        return isCancellerOrderer(orderId, memberId) || isCurrentUserAdminRole();
+    public boolean hasPermission(Long orderId, Long memberId) {
+        return isRequesterOrderer(orderId, memberId) || isCurrentUserAdminRole();
     }
 
-    private boolean isCancellerOrderer(Long orderId, Long memberId) {
+    private boolean isRequesterOrderer(Long orderId, Long memberId) {
         return orderId.equals(memberId);
     }
 
