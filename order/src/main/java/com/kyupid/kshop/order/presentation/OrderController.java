@@ -72,7 +72,7 @@ public class OrderController {
         return new OrderResponse(oprList, order.getOrdererMemberId(), order);
     }
 
-    @DeleteMapping("/{orderId}")
+    @PatchMapping("/{orderId}")
     public void cancelOrder(@PathVariable Long orderId) {
         Long memberId = jwtAuth.getMemberId();
         orderService.cancelOrder(orderId, memberId);
