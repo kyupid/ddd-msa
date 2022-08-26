@@ -1,10 +1,7 @@
 package com.kyupid.kshop.order.presentation;
 
-import com.kyupid.kshop.order.application.exception.NoPermissionException;
-import com.kyupid.kshop.order.application.exception.OrderNotFoundException;
-import com.kyupid.kshop.order.application.exception.OrderWrongAccessException;
+import com.kyupid.kshop.order.application.exception.*;
 import com.kyupid.kshop.order.application.ValidationError;
-import com.kyupid.kshop.order.application.exception.ValidationErrorException;
 import com.kyupid.kshop.order.auth.JwtException;
 import com.kyupid.kshop.order.domain.AlreadyCanceledException;
 import com.kyupid.kshop.order.domain.AlreadyShippedException;
@@ -77,5 +74,11 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(NoPermissionException.class)
     public ExceptionResponse handleNoPermissionException() {
         return new ExceptionResponse("수정 권한이 없습니다.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoCancellationPermissionException.class)
+    public ExceptionResponse handleNoCancellationPermissionException() {
+        return new ExceptionResponse("취소 권한이 없습니다.");
     }
 }

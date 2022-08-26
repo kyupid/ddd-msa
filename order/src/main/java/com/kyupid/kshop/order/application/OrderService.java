@@ -8,6 +8,7 @@ import com.kyupid.kshop.order.domain.*;
 import com.kyupid.kshop.order.infra.StockAdjustment;
 import com.kyupid.kshop.order.presentation.ChangeDeliveryRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -81,6 +83,6 @@ public class OrderService {
         /**
          * 현재 유저가 어드민인지 체크하는 로직을 삽입
          */
-        return true;
+        return false;
     }
 }
