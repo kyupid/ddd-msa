@@ -21,6 +21,19 @@ public class StockService {
 
     private final ProductRepository productRepository;
 
+    /**
+     * order-serice 에 주문이 들어왔을때
+     * Product 의 Stock 을 감소시킨다
+     *
+     * 해당 메소드가 하는 역할은 다음과 같다.
+     * 1. stock 이 충분한지 체크한다.
+     * 2. stock 이 충분하지 않으면, 사용자에게 충분하지 않은 Product 목록을 내보내기 위한 처리를 한다.
+     * 3. 요청한 각 Product 들의 stock 을 요청 quantity 에 맞춰서 감소시킨다
+     * 4. order-service 에 내보낼 해당 Product 들의 price 를 set 한다.
+     *
+     * @param request adjust 할 stockList를 받는다
+     * @return
+     */
     @Transactional
     public OrderProductReqRes decreaseStock(OrderProductReqRes request) {
         List<StockAdjustment> saList = request.getStockAdjustmentList();
@@ -50,6 +63,12 @@ public class StockService {
         }
     }
 
+    /**
+     * order-service 에 cancel 요청이 왔을 때,
+     * Product 의 Stock 을 추가해주는 역할을 한다
+     *
+     * @param saList adjust 할 stockList를 받는다
+     */
     @Transactional
     public void increaseStock(List<StockAdjustment> saList) {
         log.info("saList: {}", saList);

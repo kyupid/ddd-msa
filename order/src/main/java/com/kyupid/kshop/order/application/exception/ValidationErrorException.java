@@ -1,4 +1,6 @@
-package com.kyupid.kshop.order.application;
+package com.kyupid.kshop.order.application.exception;
+
+import com.kyupid.kshop.order.application.ValidationError;
 
 import java.util.List;
 

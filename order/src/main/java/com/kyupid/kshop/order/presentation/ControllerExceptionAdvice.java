@@ -1,9 +1,9 @@
 package com.kyupid.kshop.order.presentation;
 
-import com.kyupid.kshop.order.application.OrderNotFoundException;
-import com.kyupid.kshop.order.application.OrderWrongAccessException;
+import com.kyupid.kshop.order.application.exception.OrderNotFoundException;
+import com.kyupid.kshop.order.application.exception.OrderWrongAccessException;
 import com.kyupid.kshop.order.application.ValidationError;
-import com.kyupid.kshop.order.application.ValidationErrorException;
+import com.kyupid.kshop.order.application.exception.ValidationErrorException;
 import com.kyupid.kshop.order.auth.JwtException;
 import com.kyupid.kshop.order.domain.AlreadyCanceledException;
 import com.kyupid.kshop.order.domain.AlreadyShippedException;

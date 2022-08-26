@@ -1,9 +1,11 @@
 package com.kyupid.kshop.order.application;
 
+import com.kyupid.kshop.order.application.exception.NoCancellationPermissionException;
+import com.kyupid.kshop.order.application.exception.OrderNotFoundException;
+import com.kyupid.kshop.order.application.exception.ValidationErrorException;
 import com.kyupid.kshop.order.domain.*;
 import com.kyupid.kshop.order.infra.StockAdjustment;
 import com.kyupid.kshop.order.presentation.ChangeDeliveryRequest;
-import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +28,8 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public Order getOrder(Long memberId, Long orderId) {
-        Order order = orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
+        return orderRepository.findByOrdererMemberIdAndOrderId(memberId, orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
-        return order;
     }
 
     @Transactional

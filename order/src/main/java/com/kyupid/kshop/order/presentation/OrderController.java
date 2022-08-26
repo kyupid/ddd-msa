@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: HttpServletRequest -> 어노테이션으로 memberId 매핑하기
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/orders")
@@ -78,5 +77,4 @@ public class OrderController {
         Long memberId = jwtAuth.getMemberId();
         orderService.cancelOrder(orderId, memberId);
     }
-
 }

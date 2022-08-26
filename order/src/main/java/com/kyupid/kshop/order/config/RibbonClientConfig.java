@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * order -> product 서비스 호출에 대해 로드밸런싱을 수행한다
+ */
 @Configuration
 @LoadBalancerClient(name = "product-service")
 public class RibbonClientConfig {
