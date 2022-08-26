@@ -8,6 +8,7 @@ import com.kyupid.kshop.order.domain.OrderProduct;
 import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,7 @@ public class OrderController {
         return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), order);
     }
 
+    @Operation(summary = "배송지 수정")
     @PutMapping("/{orderId}")
     public OrderResponse changeDeliveryInfo(@RequestBody ChangeDeliveryRequest request,
                                             @PathVariable Long orderId) {
@@ -72,6 +74,7 @@ public class OrderController {
         return new OrderResponse(oprList, order.getOrdererMemberId(), order);
     }
 
+    @Operation(summary = "주문 취소")
     @PatchMapping("/{orderId}")
     public void cancelOrder(@PathVariable Long orderId) {
         Long memberId = jwtAuth.getMemberId();
