@@ -4,6 +4,7 @@ import com.kyupid.kshop.order.application.OrderService;
 import com.kyupid.kshop.order.application.PlaceOrderService;
 import com.kyupid.kshop.order.auth.JwtAuth;
 import com.kyupid.kshop.order.domain.Order;
+import com.kyupid.kshop.order.domain.OrderProduct;
 import com.kyupid.kshop.order.presentation.dto.OrderProductResponse;
 import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import com.kyupid.kshop.order.presentation.dto.OrderResponse;
@@ -34,7 +35,7 @@ public class OrderController {
             List<OrderProductResponse> opr = order.getOrderProductList().stream()
                     .map(OrderProductResponse::from)
                     .collect(Collectors.toList());
-            orderResponseList.add(new OrderResponse(opr, memberId, order.getDeliveryInfo()));
+            orderResponseList.add(new OrderResponse(opr, memberId, order));
         }
         return orderResponseList;
     }
@@ -45,16 +46,19 @@ public class OrderController {
         List<OrderProductResponse> oprList = order.getOrderProductList().stream()
                 .map(OrderProductResponse::from)
                 .collect(Collectors.toList());
-        return new OrderResponse(oprList, order.getOrdererMemberId(), order.getDeliveryInfo());
+        return new OrderResponse(oprList, order.getOrdererMemberId(), order);
     }
 
     @PostMapping
     public OrderResponse orderProduct(@RequestBody OrderRequest orderRequest) {
         orderRequest.setOrdererId(jwtAuth.getMemberId());
-        List<OrderProductResponse> oprList = placeOrderService.placeOrder(orderRequest).stream()
+
+        List<OrderProduct> orderProductList = placeOrderService.placeOrder(orderRequest);
+        Order order = orderProductList.get(0).getOrder();
+        List<OrderProductResponse> oprList = orderProductList.stream()
                 .map(OrderProductResponse::from)
                 .collect(Collectors.toList());
-        return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), orderRequest.getDeliveryInfo());
+        return new OrderResponse(oprList, orderRequest.getOrdererMemberId(), order);
     }
 
     @PutMapping("/{orderId}")
@@ -66,7 +70,7 @@ public class OrderController {
         List<OrderProductResponse> oprList = order.getOrderProductList().stream()
                 .map(OrderProductResponse::from)
                 .collect(Collectors.toList());
-        return new OrderResponse(oprList, order.getOrdererMemberId(), order.getDeliveryInfo());
+        return new OrderResponse(oprList, order.getOrdererMemberId(), order);
     }
 
     @DeleteMapping("/{orderId}")

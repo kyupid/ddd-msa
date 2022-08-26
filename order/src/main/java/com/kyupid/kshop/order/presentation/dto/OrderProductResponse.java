@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 public class OrderProductResponse {
     private Long orderId;
     private Long orderProductId;
-    private OrderStatus orderStatus;
-    private LocalDateTime orderDate;
     private Long productId;
     private Integer price;
     private Integer totalAmounts;
@@ -23,8 +21,6 @@ public class OrderProductResponse {
         return OrderProductResponse.builder()
                 .orderId(op.getOrder().getOrderId())
                 .orderProductId(op.getId())
-                .orderStatus(op.getOrder().getOrderStatus())
-                .orderDate(op.getOrder().getOrderDate())
                 .productId(op.getProductId())
                 .price(op.getPrice())
                 .totalAmounts(op.getTotalAmounts())
