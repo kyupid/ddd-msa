@@ -1,6 +1,5 @@
 package com.kyupid.kshop.order.domain;
 
-import com.kyupid.kshop.order.presentation.dto.OrderRequest;
 import lombok.*;
 
 import javax.persistence.*;

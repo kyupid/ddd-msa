@@ -53,8 +53,8 @@ public class OrderService {
         if (!hasCancellationPermission(orderId, memberId)) {
             throw new NoCancellationPermissionException();
         }
-        increaseStock(order);
         order.cancel();
+        increaseStock(order);
     }
 
     private void increaseStock(Order order) {
