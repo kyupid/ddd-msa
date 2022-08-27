@@ -92,7 +92,7 @@ Reference:
 - [DDD 시작하기 by 최범균님](http://www.yes24.com/Product/Goods/108431347)
 - [분산 트랜잭션 구현 by 유영모님](https://www.popit.kr/rest-%EA%B8%B0%EB%B0%98%EC%9D%98-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B6%84%EC%82%B0-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B5%AC%ED%98%84-1%ED%8E%B8/)
 
-#### References that helped implement the feature in the project 
+#### References that helped implement features in the project 
 - [[Baeldung] Documenting a Spring REST API Using OpenAPI 3.0](https://www.baeldung.com/spring-rest-openapi-documentation)
 - [[Spring Boot Doc] Using the @SpringBootApplication Annotation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.using-the-springbootapplication-annotation)
 - [[StackOverFlow] What exactly is Field Injection and how to avoid it?](https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it)
